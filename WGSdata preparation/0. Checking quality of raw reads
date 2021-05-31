@@ -1,0 +1,14 @@
+#!/bin/bash -l
+#PBS -A qris-uq
+#PBS -N fastp_bc1312
+#PBS -l walltime=04:00:00
+#PBS -l select=1:ncpus=4:mem=40G
+
+module load fastp/0.20.1
+
+cd $PBS_O_WORKDIR
+
+INPONE=/QRISdata/Q0969/uqralls1/WGSdata/BC1312/BC1312_1.fq.gz
+INPTWO=/QRISdata/Q0969/uqralls1/WGSdata/BC1312/BC1312_2.fq.gz
+
+fastp --in1 $INPONE --in2 $INPTWO --out1 BC1312.R1.trimmed.fastq.gz --out2 BC1312.R2.trimmed.fastq.gz --unpaired1 BC1312.R1.unpaired.fastq.gz --unpaired2 BC1312.R2.unpaired.fastq.gz -l 50 -h BC1312.html &> BC1312.log
