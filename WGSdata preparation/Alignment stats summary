@@ -1,0 +1,12 @@
+#print TOTAL READS and individual name from each stats report into a summary file 
+awk 'FNR==1 {print FILENAME, $1}' *.txt  > readstotal
+
+#print READS MAPPED (number and percentage) and individual name from each stats report into a summary file
+awk 'FNR==5 {print FILENAME, $1,$5}' *.txt  > readsmapped
+#remove extra punctionation marks
+sed 's/(//' readsmapped >readsmapped.tmp && mv readsmapped.tmp readsmapped
+
+#print READS PAIRED (number and percentage) and individual name from each stats report into a summary file
+awk 'FNR==9 {print FILENAME, $1,$6}' *.txt  > readspaired
+#remove extra punctuation marks
+sed 's/(//' readspaired >readspaired.tmp && mv readspaired.tmp readspaired
