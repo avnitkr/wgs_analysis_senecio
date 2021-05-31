@@ -1,0 +1,32 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=05:00:00
+#PBS -l select=1:ncpus=1:mem=15GB
+#PBS -N realign-indel
+#PBS -J 1-69
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#setting the job sample list
+SAMPLELIST=/QRISdata/Q0969/f_eleven_kaur/wgsdata/Gravitropic/gravitropicinds.txt
+
+#setting the job sample
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#copying the necessary files to the job temporary directory
+cp /QRISdata/Q0969/recombinantpop_kaur/mdup_cln_sortedbams/Gravitropic/${SAMPLE}_mdup.cln.sorted.bam ${TMPDIR}
+cp /QRISdata/Q0969/recombinantpop_kaur/mdup_cln_sortedbams/Gravitropic/${SAMPLE}_mdup.cln.sorted.bam.bai ${TMPDIR}
+cp -r /90days/uqakaur3/Reference ${TMPDIR}
+
+#realigning regions with indels in the sample using GATK3.8 IndelRealigner
+#note: using intervals file from storage because IndelRealigner can't handle the character '[' in the TMPDIR file path
+java -jar /home/uqakaur3/GATK/GenomeAnalysisTK.jar \
+        -T IndelRealigner \
+        -R ${TMPDIR}/Reference/SPD_CN1K_CtgRN.fasta \
+        -I ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam \
+        -targetIntervals /QRISdata/Q0969/recombinantpop_kaur/realign_targets/Gravitropic/${SAMPLE}.intervals \
+        -o ${TMPDIR}/${SAMPLE}_rln.mdup.cln.bam
+
+#copying the resulting file back to storage
+cp ${TMPDIR}/${SAMPLE}_rln.mdup.cln.bam /QRISdata/Q0969/recombinantpop_kaur/realign_indels/Gravitropic/
