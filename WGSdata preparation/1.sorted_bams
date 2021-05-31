@@ -27,7 +27,7 @@ cp /QRISdata/Q0969/naturalpop_kaur/wgsdata/headlands/H01/${SAMPLE}_1.fq.gz ${TMP
 cp /QRISdata/Q0969/naturalpop_kaur/wgsdata/headlands/H01/${SAMPLE}_2.fq.gz ${TMPDIR}
 
 #aligning and adding read groups with BWA, sorting the bam file with Samtools
-bwa mem -t 12 -M -R "@RG\tSM:${SAMPLE}\tID:${SAMPLE}\tLB:${SAMPLE}\tPL:ILLUMINA\tPU:${SAMPLE}" ${TMPDIR}/reference/SPD_CN1K_CtgRN.fasta ${TMPDIR}/${SAMPLE}_1.fq.gz ${TMPDIR}/${SAMPLE}_2.fq$
+bwa mem -t 12 -M -R "@RG\tSM:${SAMPLE}\tID:${SAMPLE}\tLB:${SAMPLE}\tPL:ILLUMINA\tPU:${SAMPLE}" ${TMPDIR}/reference/SPD_CN1K_CtgRN.fasta ${TMPDIR}/${SAMPLE}_1.fq.gz ${TMPDIR}/${SAMPLE}_2.fq.gz | samtools sort -@ 12 -T ${SAMPLE} -o ${TMPDIR}/${SAMPLE}_sorted.bam -
 
 #copying the sorted bam file back to results directory to keep
 cp ${TMPDIR}/${SAMPLE}_sorted.bam /QRISdata/Q0969/naturalpop_kaur/sorted_bams/headlands/H01/
