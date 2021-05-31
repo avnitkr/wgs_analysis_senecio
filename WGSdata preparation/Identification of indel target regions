@@ -1,0 +1,28 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=06:00:00
+#PBS -l select=1:ncpus=2:mem=20GB
+#PBS -N realign-targets
+#PBS -J 1-69
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#setting the job sample list
+SAMPLELIST=/QRISdata/Q0969/f_eleven_kaur/wgsdata/Gravitropic/gravitropicinds.txt
+
+#setting the job sample
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#copying the relevant files into the job temporary directory
+cp /QRISdata/Q0969/recombinantpop_kaur/mdup_cln_sortedbams/Gravitropic/${SAMPLE}_mdup.cln.sorted.bam ${TMPDIR}
+cp /QRISdata/Q0969/recombinantpop_kaur/mdup_cln_sortedbams/Gravitropic/${SAMPLE}_mdup.cln.sorted.bam.bai ${TMPDIR}
+cp -r /90days/uqakaur3/Reference ${TMPDIR}
+
+#running GATK3.8 for each sample to identify indel targets
+java -jar /home/uqakaur3/GATK/GenomeAnalysisTK.jar -T RealignerTargetCreator -R ${TMPDIR}/Reference/SPD_CN1K_CtgRN.fasta -I ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam -nt 2 -o ${TMPDIR}/${SAM$
+
+#copying the indel target interval file back to storage
+cp ${TMPDIR}/${SAMPLE}.intervals /QRISdata/Q0969/recombinantpop_kaur/realign_targets/Gravitropic
+
+###make sure to run this on flashlite/awoonga, doesnot work on tinaroo
