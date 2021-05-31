@@ -1,0 +1,36 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=06:00:00
+#PBS -l select=1:ncpus=1:mem=20GB
+#PBS -N mdup-array
+#PBS -J 1-69
+set -e
+set -u
+set -o pipefail
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#setting the sample list
+SAMPLELIST=/QRISdata/Q0969/f_eleven_kaur/wgsdata/Gravitropic/gravitropicinds.txt
+
+#setting the job sample
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#copying the relevant files into the temporary directory
+cp /QRISdata/Q0969/recombinantpop_kaur/cln_sortedbams/Gravitropic/${SAMPLE}_cln.sorted.bam ${TMPDIR}
+
+#marking PCR duplicates for removal with Picard MarkDuplicates
+java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar /home/uqakaur3/picard.jar MarkDuplicates \
+        INPUT=${SAMPLE}_cln.sorted.bam \
+        OUTPUT=${SAMPLE}_mdup.cln.sorted.bam \
+        REMOVE_DUPLICATES=false \
+        ASSUME_SORTED=true \
+        VALIDATION_STRINGENCY=SILENT \
+        READ_NAME_REGEX=null \
+        MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=900 \
+        METRICS_FILE=${SAMPLE}_mdup.cln.sorted.metrics
+
+#copying the output file and metrics file back to the results directory
+cp ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam /QRISdata/Q0969/recombinantpop_kaur/mdup_cln_sortedbams/Gravitropic/
+cp ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.metrics /QRISdata/Q0969/recombinantpop_kaur/mdup_cln_sortedbams/Gravitropic/metrics/
