@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=03:00:00
+#PBS -l select=1:ncpus=3:mem=3GB
+#PBS -N dict-ref-gatk
+
+#changing to the reference genome directory
+cd $PBS_O_WORKDIR
+
+#creating a dictionary file of the reference genome for GATK to use in indel realignment steps
+java -jar /home/uqakaur3/picard.jar CreateSequenceDictionary R=/90days/uqakaur3/Reference/SPD_CN1K_CtgRN.fasta O=SPD_CN1K_CtgRN.dict
