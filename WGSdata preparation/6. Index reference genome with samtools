@@ -1,0 +1,15 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=05:00:00
+#PBS -l select=1:ncpus=3:mem=4GB
+#PBS -N indx-ref-gatk
+
+#changing to the reference genome directory
+
+cd $PBS_O_WORKDIR
+
+#loading samtools
+module load samtools
+
+#indexing the reference genome with samtools for use with GATK
+samtools faidx /90days/uqakaur3/Reference/SPD_CN1K_CtgRN.fasta
