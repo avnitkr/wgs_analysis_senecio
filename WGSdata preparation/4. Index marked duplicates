@@ -1,0 +1,20 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=01:00:00
+#PBS -l select=1:ncpus=3:mem=3GB
+#PBS -N index-mdup-bam
+#PBS -J 1-69
+
+cd ${TMPDIR}
+
+SAMPLELIST=/QRISdata/Q0969/f_eleven_kaur/wgsdata/Gravitropic/gravitropicinds.txt
+
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+module load samtools
+
+cp /QRISdata/Q0969/recombinantpop_kaur/mdup_cln_sortedbams/Gravitropic/${SAMPLE}_mdup.cln.sorted.bam ${TMPDIR}
+
+samtools index ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam
+
+cp ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam.bai /QRISdata/Q0969/recombinantpop_kaur/mdup_cln_sortedbams/Gravitropic/
