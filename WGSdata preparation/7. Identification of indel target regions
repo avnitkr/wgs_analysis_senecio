@@ -20,7 +20,7 @@ cp /QRISdata/Q0969/recombinantpop_kaur/mdup_cln_sortedbams/Gravitropic/${SAMPLE}
 cp -r /90days/uqakaur3/Reference ${TMPDIR}
 
 #running GATK3.8 for each sample to identify indel targets
-java -jar /home/uqakaur3/GATK/GenomeAnalysisTK.jar -T RealignerTargetCreator -R ${TMPDIR}/Reference/SPD_CN1K_CtgRN.fasta -I ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam -nt 2 -o ${TMPDIR}/${SAM$
+java -jar /home/uqakaur3/GATK/GenomeAnalysisTK.jar -T RealignerTargetCreator -R ${TMPDIR}/Reference/SPD_CN1K_CtgRN.fasta -I ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam -nt 2 -o ${TMPDIR}/${SAMPLE}.intervals
 
 #copying the indel target interval file back to storage
 cp ${TMPDIR}/${SAMPLE}.intervals /QRISdata/Q0969/recombinantpop_kaur/realign_targets/Gravitropic
