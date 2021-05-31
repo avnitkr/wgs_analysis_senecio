@@ -1,0 +1,33 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=06:00:00
+#PBS -l select=1:ncpus=12:mem=40GB
+#PBS -N align-array
+#PBS -J 1-31
+set -e
+set -u
+set -o pipefail
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#loading the programs
+module load bwa/0.7.13
+module load samtools
+
+#setting the sample list
+SAMPLELIST=/QRISdata/Q0969/naturalpop_kaur/wgsdata/headlands/H01/H01_inds.txt
+
+#setting the sample from the job array
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#copying the necessary files to the temporary job directory
+cp -r /30days/uqakaur3/wholepipeline_test/reference ${TMPDIR}
+cp /QRISdata/Q0969/naturalpop_kaur/wgsdata/headlands/H01/${SAMPLE}_1.fq.gz ${TMPDIR}
+cp /QRISdata/Q0969/naturalpop_kaur/wgsdata/headlands/H01/${SAMPLE}_2.fq.gz ${TMPDIR}
+
+#aligning and adding read groups with BWA, sorting the bam file with Samtools
+bwa mem -t 12 -M -R "@RG\tSM:${SAMPLE}\tID:${SAMPLE}\tLB:${SAMPLE}\tPL:ILLUMINA\tPU:${SAMPLE}" ${TMPDIR}/reference/SPD_CN1K_CtgRN.fasta ${TMPDIR}/${SAMPLE}_1.fq.gz ${TMPDIR}/${SAMPLE}_2.fq$
+
+#copying the sorted bam file back to results directory to keep
+cp ${TMPDIR}/${SAMPLE}_sorted.bam /QRISdata/Q0969/naturalpop_kaur/sorted_bams/headlands/H01/
