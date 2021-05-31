@@ -1,0 +1,27 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=06:00:00
+#PBS -l select=1:ncpus=1:mem=2GB
+#PBS -N clean-bam-array
+#PBS -J 1-69
+set -e
+set -u
+set -o pipefail
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#setting the sample list
+SAMPLELIST=/QRISdata/Q0969/f_eleven_kaur/wgsdata/Gravitropic/gravitropicinds.txt
+
+#setting the job sample
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#copying in the relevant bam file
+cp /QRISdata/Q0969/recombinantpop_kaur/sorted_bams/Gravitropic/${SAMPLE}_sorted.bam ${TMPDIR}
+
+#cleaning the bam file with Picard
+java -Xmx2g -jar /home/uqakaur3/picard.jar CleanSam INPUT=${SAMPLE}_sorted.bam OUTPUT=${SAMPLE}_cln.sorted.bam
+
+#copying the cleaned bam file out of the temporary job directory
+cp ${TMPDIR}/${SAMPLE}_cln.sorted.bam /QRISdata/Q0969/recombinantpop_kaur/cln_sortedbams/Gravitropic/
