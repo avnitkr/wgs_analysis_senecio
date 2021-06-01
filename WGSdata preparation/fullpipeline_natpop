@@ -1,9 +1,8 @@
-##raw sequences to sortedbams
 #!/bin/bash
 #PBS -A UQ-SCI-BiolSci
 #PBS -l walltime=06:00:00
 #PBS -l select=1:ncpus=12:mem=40GB
-#PBS -N align
+#PBS -N align-array
 #PBS -J 1-36
 set -e
 set -u
@@ -16,16 +15,22 @@ cd ${TMPDIR}
 module load bwa/0.7.13
 module load samtools
 
+#setting the sample list
+SAMPLELIST=/QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01_inds.txt
+
+#setting the sample from the job array
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
 #copying the necessary files to the temporary job directory
 cp -r /30days/uqakaur3/wholepipeline_test/reference ${TMPDIR}
-cp /QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01288_1.fq.gz ${TMPDIR}
-cp /QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01288_2.fq.gz ${TMPDIR}
+cp /QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/${SAMPLE}_1.fq.gz ${TMPDIR}
+cp /QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/${SAMPLE}_2.fq.gz ${TMPDIR}
 
 #aligning and adding read groups with BWA, sorting the bam file with Samtools
-bwa mem -t 12 -M -R "@RG\tSM:D01288\tID:D01288\tLB:D01288\tPL:ILLUMINA\tPU:D01288" ${TMPDIR}/reference/SPD_CN1K_CtgRN.fasta ${TMPDIR}/D01288_1.fq.gz ${TMPDIR}/D01288_2.fq.gz | samtools sort -@ 12 -T ${SAMPLE} -o ${TMPDIR}/${SAMPLE}_sorted.bam -
+bwa mem -t 12 -M -R "@RG\tSM:${SAMPLE}\tID:${SAMPLE}\tLB:${SAMPLE}\tPL:ILLUMINA\tPU:${SAMPLE}" ${TMPDIR}/reference/SPD_CN1K_CtgRN.fasta ${TMPDIR}/${SAMPLE}_1.fq.gz ${TMPDIR}/${SAMPLE}_2.fq$
 
 #copying the sorted bam file back to results directory to keep
-cp ${TMPDIR}/D01288_sorted.bam /QRISdata/Q0969/naturalpop_kaur/sorted_bams/dunes/D01/
+cp ${TMPDIR}/${SAMPLE}_sorted.bam /QRISdata/Q0969/naturalpop_kaur/sorted_bams/dunes/D01/
 
 
 ##sortedbams to clean sorted bams
