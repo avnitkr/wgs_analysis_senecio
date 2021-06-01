@@ -5,3 +5,13 @@ zcat chr_nine-SNPs.mafs.gz | awk 'NR!=1{print $1"\t"$2"\t"$3"\t"$4}' > chr_nine-
 
 #sorting the sites file by column 1
 sort -k1 chr_nine-SNPs.txt > chr_nine-SNPs-sorted.txt
+
+
+###issue that may arise during indexing and here is the solution!!!
+
+#Turns out was just a sorting problem both on the cluster and locally. Instead of running:
+#sort -k1 myfile > sorted.myfile
+#I had to do:
+#sort -k 1 -n -b -f -t $'\t' myfile > sorted.myfile
+#Then I did not have any problem indexing it.
+
