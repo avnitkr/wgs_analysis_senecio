@@ -51,7 +51,7 @@ angsd -P 15 \
 #-P nb of threads -nQueueSize maximum waiting in memory (necesary to optimize CPU usage
 # -doMaf 1 (allele frequencies)  -dosaf (prior for SFS) -GL (Genotype likelihood 2 GATK method - export GL in beagle format  -doGLF2) 
 # -doMajorMinor 1 use the most frequent allele as major
-# -anc provide a ancestral sequence = reference in our case -fold 1 (car on utilise la ref comme ancestral
+# -anc provide a ancestral sequence = reference in our case -fold 1 
 # -rf (file with the region written) work on a defined region : OPTIONAL
 # -b (bamlist) input file
 # -out  output file
