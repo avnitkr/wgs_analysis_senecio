@@ -1,0 +1,20 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=05:00:00
+#PBS -l select=1:ncpus=15:mem=60GB
+#PBS -N variants
+
+cd $PBS_O_WORKDIR
+
+module load angsd
+module load R
+echo "from the maf file, extract a list of SNP chr, positoin, major all, minor all"
+gunzip /30days/uqakaur3/pilot/variants/chrnine_variants_all.mafs.gz
+
+INFILE=chrnine_variants_all.mafs
+OUTFILE_sites=sites_chrnine_variants_all
+OUTFILE_regions=regions_chrnine_variants_all
+
+Rscript /30days/uqakaur3/pilot/variants/make_sites_list_maxdepth_simple.R "$INFILE" "$OUTFILE_sites" "$OUTFILE_regions"
+
+angsd sites index $OUTFILE_sites
