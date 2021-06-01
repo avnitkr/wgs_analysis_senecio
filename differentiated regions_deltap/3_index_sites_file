@@ -1,0 +1,2 @@
+#indexing the file for use with ANGSD
+angsd sites index chr_nine-SNPs-sorted.txt
