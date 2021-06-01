@@ -38,6 +38,7 @@ echo "keep loci with at leat one read for n individuals = $MIN_IND, which is $PE
 echo "filter on allele frequency = $MIN_MAF"
 
 ####Calculate the SAF, MAF and GL
+## an attempt with -nQueueSize 50 after -P flag : see how it goes??
 angsd -P 15 \
 -doMaf 1 -dosaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
 -anc $REF -remove_bads 1 -minMapQ 30 -minQ 20 -skipTriallelic 1 \
