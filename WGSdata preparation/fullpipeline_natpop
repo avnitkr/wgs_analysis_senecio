@@ -1,0 +1,215 @@
+##raw sequences to sortedbams
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=06:00:00
+#PBS -l select=1:ncpus=12:mem=40GB
+#PBS -N align
+#PBS -J 1-36
+set -e
+set -u
+set -o pipefail
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#loading the programs
+module load bwa/0.7.13
+module load samtools
+
+#copying the necessary files to the temporary job directory
+cp -r /30days/uqakaur3/wholepipeline_test/reference ${TMPDIR}
+cp /QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01288_1.fq.gz ${TMPDIR}
+cp /QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01288_2.fq.gz ${TMPDIR}
+
+#aligning and adding read groups with BWA, sorting the bam file with Samtools
+bwa mem -t 12 -M -R "@RG\tSM:D01288\tID:D01288\tLB:D01288\tPL:ILLUMINA\tPU:D01288" ${TMPDIR}/reference/SPD_CN1K_CtgRN.fasta ${TMPDIR}/D01288_1.fq.gz ${TMPDIR}/D01288_2.fq.gz | samtools sort -@ 12 -T ${SAMPLE} -o ${TMPDIR}/${SAMPLE}_sorted.bam -
+
+#copying the sorted bam file back to results directory to keep
+cp ${TMPDIR}/D01288_sorted.bam /QRISdata/Q0969/naturalpop_kaur/sorted_bams/dunes/D01/
+
+
+##sortedbams to clean sorted bams
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=06:00:00
+#PBS -l select=1:ncpus=1:mem=2GB
+#PBS -N clean-bam-array
+#PBS -J 1-36
+set -e
+set -u
+set -o pipefail
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#setting the sample list
+SAMPLELIST=/QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01_inds.txt
+
+#setting the job sample
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#copying in the relevant bam file
+cp /QRISdata/Q0969/naturalpop_kaur/sorted_bams/dunes/D01/${SAMPLE}_sorted.bam ${TMPDIR}
+
+#cleaning the bam file with Picard
+java -Xmx2g -jar /home/uqakaur3/picard.jar CleanSam INPUT=${SAMPLE}_sorted.bam OUTPUT=${SAMPLE}_cln.sorted.bam
+
+#copying the cleaned bam file out of the temporary job directory
+cp ${TMPDIR}/${SAMPLE}_cln.sorted.bam /QRISdata/Q0969/naturalpop_kaur/cln_sortedbams/dunes/D01/
+
+
+
+
+##mark duplicates in clean sorted bams
+
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=06:00:00
+#PBS -l select=1:ncpus=1:mem=20GB
+#PBS -N mdup-array
+#PBS -J 1-31
+set -e
+set -u
+set -o pipefail
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#setting the sample list
+SAMPLELIST=/QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01_inds.txt
+
+#setting the job sample
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#copying the relevant files into the temporary directory
+cp /QRISdata/Q0969/naturalpop_kaur/cln_sortedbams/dunes/D01/${SAMPLE}_cln.sorted.bam ${TMPDIR}
+
+#marking PCR duplicates for removal with Picard MarkDuplicates
+java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar /home/uqakaur3/picard.jar MarkDuplicates \
+        INPUT=${SAMPLE}_cln.sorted.bam \
+        OUTPUT=${SAMPLE}_mdup.cln.sorted.bam \
+        REMOVE_DUPLICATES=false \
+        ASSUME_SORTED=true \
+        VALIDATION_STRINGENCY=SILENT \
+        READ_NAME_REGEX=null \
+        MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=900 \
+        METRICS_FILE=${SAMPLE}_mdup.cln.sorted.metrics
+
+#copying the output file and metrics file back to the results directory
+cp ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam /QRISdata/Q0969/naturalpop_kaur/mdup_cln_sortedbams/dunes/D01/
+cp ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.metrics /QRISdata/Q0969/naturalpop_kaur/mdup_cln_sortedbams/dunes/D01/metrics/
+
+
+
+##index marked duplicates
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=01:00:00
+#PBS -l select=1:ncpus=3:mem=3GB
+#PBS -N index-mdup-bam
+#PBS -J 1-36
+
+cd ${TMPDIR}
+
+SAMPLELIST=/QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01_inds.txt
+
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+module load samtools
+
+cp /QRISdata/Q0969/naturalpop_kaur/mdup_cln_sortedbams/dunes/D01/${SAMPLE}_mdup.cln.sorted.bam ${TMPDIR}
+
+samtools index ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam
+
+cp ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam.bai /QRISdata/Q0969/naturalpop_kaur/mdup_cln_sortedbams/dunes/D01/
+
+
+
+###identification of indel 
+
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=06:00:00
+#PBS -l select=1:ncpus=2:mem=20GB
+#PBS -N realign-targets
+#PBS -J 1-36
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#setting the job sample list
+SAMPLELIST=/QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01_inds.txt
+
+#setting the job sample
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#copying the relevant files into the job temporary directory
+cp /QRISdata/Q0969/naturalpop_kaur/mdup_cln_sortedbams/dunes/D01/${SAMPLE}_mdup.cln.sorted.bam ${TMPDIR}
+cp /QRISdata/Q0969/naturalpop_kaur/mdup_cln_sortedbams/dunes/D01/${SAMPLE}_mdup.cln.sorted.bam.bai ${TMPDIR}
+cp -r /90days/uqakaur3/Reference ${TMPDIR}
+
+#running GATK3.8 for each sample to identify indel targets
+java -jar /home/uqakaur3/GATK/GenomeAnalysisTK.jar -T RealignerTargetCreator -R ${TMPDIR}/Reference/SPD_CN1K_CtgRN.fasta -I ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam -nt 2 -o ${TMPDIR}/${SAMPLE}.intervals
+
+#copying the indel target interval file back to storage
+cp ${TMPDIR}/${SAMPLE}.intervals /QRISdata/Q0969/naturalpop_kaur/realign_targets/dunes/D01/
+
+
+
+###realigining target regions with indels
+
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=05:00:00
+#PBS -l select=1:ncpus=1:mem=15GB
+#PBS -N realign-indel
+#PBS -J 1-36
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#setting the job sample list
+SAMPLELIST=/QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01_inds.txt
+
+#setting the job sample
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#copying the necessary files to the job temporary directory
+cp /QRISdata/Q0969/naturalpop_kaur/mdup_cln_sortedbams/dunes/D01/${SAMPLE}_mdup.cln.sorted.bam ${TMPDIR}
+cp /QRISdata/Q0969/naturalpop_kaur/mdup_cln_sortedbams/dunes/D01/${SAMPLE}_mdup.cln.sorted.bam.bai ${TMPDIR}
+cp -r /90days/uqakaur3/Reference ${TMPDIR}
+
+#realigning regions with indels in the sample using GATK3.8 IndelRealigner
+#note: using intervals file from storage because IndelRealigner can't handle the character '[' in the TMPDIR file path
+java -jar /home/uqakaur3/GATK/GenomeAnalysisTK.jar \
+        -T IndelRealigner \
+        -R ${TMPDIR}/Reference/SPD_CN1K_CtgRN.fasta \
+        -I ${TMPDIR}/${SAMPLE}_mdup.cln.sorted.bam \
+        -targetIntervals /QRISdata/Q0969/naturalpop_kaur/realign_targets/dunes/D01/${SAMPLE}.intervals \
+        -o ${TMPDIR}/${SAMPLE}_rln.mdup.cln.bam
+
+#copying the resulting file back to storage
+cp ${TMPDIR}/${SAMPLE}_rln.mdup.cln.bam /QRISdata/Q0969/naturalpop_kaur/realign_indels/dunes/D01/
+
+###index realigned BAMS
+
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=01:00:00
+#PBS -l select=1:ncpus=2:mem=2GB
+#PBS -N index-rln-bam
+#PBS -J 1-36
+
+cd ${TMPDIR}
+
+SAMPLELIST=/QRISdata/Q0969/naturalpop_kaur/wgsdata/dunes/D01/D01_inds.txt
+
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+module load samtools
+
+cp /QRISdata/Q0969/naturalpop_kaur/realign_indels/dunes/D01/${SAMPLE}_rln.mdup.cln.bam ${TMPDIR}
+
+samtools index ${TMPDIR}/${SAMPLE}_rln.mdup.cln.bam
+
+cp ${TMPDIR}/${SAMPLE}_rln.mdup.cln.bam.bai /QRISdata/Q0969/naturalpop_kaur/realign_indels/dunes/D01/
