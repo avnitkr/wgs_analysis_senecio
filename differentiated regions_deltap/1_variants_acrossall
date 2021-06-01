@@ -45,3 +45,19 @@ angsd -P 15 \
 -minInd $MIN_IND -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH -setMinDepthInd $MIN_DEPTH \
 -b $BAMS \
 -rf $REGIONS -out chrnine_variants
+
+
+#main features
+#-P nb of threads -nQueueSize maximum waiting in memory (necesary to optimize CPU usage
+# -doMaf 1 (allele frequencies)  -dosaf (prior for SFS) -GL (Genotype likelihood 2 GATK method - export GL in beagle format  -doGLF2) 
+# -doMajorMinor 1 use the most frequent allele as major
+# -anc provide a ancestral sequence = reference in our case -fold 1 (car on utilise la ref comme ancestral
+# -rf (file with the region written) work on a defined region : OPTIONAL
+# -b (bamlist) input file
+# -out  output file
+
+#main filters
+#filter on bam files -remove_bads (remove files with flag above 255) -minMapQ minimum mapquality -minQ (minimum quality of reads?)
+#filter on frequency -minInd (minimum number of individuals with at least one read at this locus) we set it to 50%
+#filter on allele frequency -minMaf, set to 0.05 
+
