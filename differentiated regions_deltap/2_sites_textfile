@@ -1,0 +1,7 @@
+#for use as -sites argument in ANGSD allele frequency calculation step
+
+#making a text file version of the variable sites in the .mafs.gz file (just want contig snp major minor)
+zcat chr_nine-SNPs.mafs.gz | awk 'NR!=1{print $1"\t"$2"\t"$3"\t"$4}' > chr_nine-SNPs.txt
+
+#sorting the sites file by column 1
+sort -k1 chr_nine-SNPs.txt > chr_nine-SNPs-sorted.txt
