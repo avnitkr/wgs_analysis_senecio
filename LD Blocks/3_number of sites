@@ -1,0 +1,2 @@
+#calculate the number of sites
+N_SITES=$(wc -l $POS_FILE | cut -d " " -f 1)
