@@ -1,0 +1,11 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=05:00:00
+#PBS -l select=1:ncpus=15:mem=60GB
+#PBS -N ngsld
+
+cd $PBS_O_WORKDIR
+
+module load python
+
+python3 /30days/uqakaur3/pilot/ldblock_chrnine/ldblocks.py ngsld_chrnine.ld 1 ngsld_chrnine.ld_by_1.ld
