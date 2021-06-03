@@ -1,3 +1,3 @@
-ls *_1.fq.gz > agravitropicinds.txt #extracting forward reads from directory
-sed -i 's/.$//' agravitropicinds.txt #removes the last character #-i specifies remove in the same file
-sed '1,40! d' agravitropicinds.txt > agravitropicindsforty.txt #extracting a range of lines
+#for making the list of full file paths to BAMs to use with ANGSD
+#run for each directory containing bams
+find /path/to/bams $PWD -type f -name "*.bam" >> bam-paths.txt
