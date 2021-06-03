@@ -1,0 +1,16 @@
+FILE=""
+mat_ld_all_chr1<-read.table(FILE, header=T)
+mat_ld_all_chr1<-mat_ld_all_chr1[-which(mat_ld_all_chr1$Pos1==mat_ld_all_chr1$Pos2),]
+head(mat_ld_all_chr1)
+
+variable_name=0.02
+
+mat_ld_all_chr1_var<-mat_ld_all_chr1[mat_ld_all_chr1$Percent==variable_name,]
+head(mat_ld_all_chr1_var)
+
+ggplot(mat_ld_all_chr1_var,aes(x=Pos1/1000,y=Pos2/1000)) + theme_classic() +
+  geom_tile(aes(fill=R2))+
+  scale_fill_gradientn(colours=c("white","lightgrey","grey80","turquoise","deepskyblue3","blue3","navyblue","black"), limits=c(0,1), values=c(0,0.125,0.25,0.375,0.5,0.675,0.75,1), name="R2")+ xlab("position (Mb)") + ylab("position(Mb)") +
+  scale_x_continuous(expand=c(0.02,0))+
+  scale_y_continuous(expand=c(0.02,0)) +
+  coord_fixed(ratio = 1)
