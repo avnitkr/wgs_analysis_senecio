@@ -1,0 +1,3 @@
+#input position file
+gunzip -c file.mafs.gz | cut -f -2 | awk '{if(NR>1)print}' > sites_file 
+POS_FILE=sites_file
