@@ -1,0 +1,13 @@
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=05:00:00
+#PBS -l select=1:ncpus=15:mem=60GB
+#PBS -N ngsld
+
+cd $PBS_O_WORKDIR
+
+NGSLD=/home/uqakaur3/ngsLD/
+
+#run ngsLD
+$NGSLD/ngsLD --geno /30days/uqakaur3/pilot/ld_block/ngsld_chrnine.beagle.gz --probs --n_ind 131 --n_sites 28846 \
+             --pos /30days/uqakaur3/pilot/ld_block/sites_ngsld_chrnine\
+             --n_threads 15 --max_kb_dist 0 --max_snp_dist 0 --outH ngsld_chrnine.ld --extend_out
