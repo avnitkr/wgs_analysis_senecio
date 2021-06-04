@@ -7,40 +7,40 @@
 cd $PBS_O_WORKDIR
 
 #setting the job population bam paths list
-BAMS=/30days/uqakaur3/recombinantpop/arraylists/gravitropic-bam-paths.txt
+BAMS=/30days/uqakaur3/recombinantpop/arraylists/agravitropicbam-paths.txt
 
 ##replace with agravitropic-bam-paths.txt for agravitropic population
 
 #setting the target regions (format is contig:start-end)
 REGIONS=/30days/uqakaur3/pilot/region/sorted_chr9contig.txt
-
+SITES=/30days/uqakaur3/pilot/variants_b/sorted_chr_nine-SNPs.txt
 #setting reference genome and its location
 REF=/90days/uqakaur3/Reference/SPD_CN1K_CtgRN.fasta
 
 #filter : will keep SNP above this allele frequency (over all individuals)
-MIN_MAF=0.05 
+MIN_MAF=0.05
 
-#filter : will keep positions with at least MIN_DEPTH reads for each individual, This is not necessaily for all individuals, we consider a PERCENT_IND (percentage of individuals over all individuals in step 03, and within each pop at step 07)
+#filter : will keep positions with at least MIN_DEPTH reads for each individual, This is not necessaily for all individuals, we consider a PERCENT_IND (percentage of individuals over all i$
 #advice: as min depth use a value that is a bit below what you expected. we use 1 for 1X of coverage but if you have 5X it may make sense to put the bar a bit higher to 2 or 3
 #advice: as percentage, avoid going below 50% and also consider the whole number of individuals. (it may makes sense to use 50% with 100 ind/pop, but you may want 90% with 9 ind/pop
-PERCENT_IND=0.5
+PERCENT_IND=0.75
 MIN_DEPTH=1
 
-#filter: will keep SNP with at least a coverage of this factor multiplied by the number of ind - across all ind. 
+#filter: will keep SNP with at least a coverage of this factor multiplied by the number of ind - across all ind.
 # advice: we usually set it at 2-4 times the expected coverage to remove repeated regions
 MAX_DEPTH_FACTOR=3
 
 N_IND=$(wc -l $BAMS | cut -d " " -f 1)
 MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
-MIN_IND=${MIN_IND_FLOAT%.*} 
+MIN_IND=${MIN_IND_FLOAT%.*}
 
-
+ANGSD=/home/uqakaur3/angsd/
 echo "will filter for sites with at least one read in $MIN_IND individuals, which is $PERCENT_IND of the total"
 
-angsd -P 50 -nQueueSize 50 \
+$ANGSD/angsd -P 15 \
 -doMaf 1 -dosaf 1 -GL 2 -doMajorMinor 3 \
 -anc $REF \
 -remove_bads 1 -minMapQ 30 -minQ 20 -minInd $MIN_IND -setMinDepthInd $MIN_DEPTH \
--sites pathtositesfile \ ##make sure sites file is indexed and sorted
+-sites $SITES \
 -rf $REGIONS \
 -b $BAMS -out gravitropic_allele_frequency
