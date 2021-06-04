@@ -1,8 +1,9 @@
-#R script for combining allele frequencies from multiple populations into one masterfile
+attach(agravitropic_allele_frequency)
+attach(gravitropic_allele_frequency)
+Gsnps <-gravitropic_allele_frequency
 
-#Reading in allele freqency files
-Gsnps <- read.table("/Users/robinallsopp/Dropbox/PapersRobin/Data/Gravitropic-freq.mafs", header = TRUE)
-AGsnps <- read.table("/Users/robinallsopp/Dropbox/PapersRobin/Data/Agravitropic-freq.mafs", header = TRUE)
+AGsnps <-agravitropic_allele_frequency
+
 
 #Look at files
 head(Gsnps)
@@ -10,10 +11,10 @@ head(AGsnps)
 
 #Add unique ID for each SNP
 Gsnps$id <- paste(Gsnps$chromo, Gsnps$position, sep = "_")
-AGsnps$id <- paste(Gsnps$chromo, AGsnps$position, sep = "_")
+AGsnps$id <- paste(AGsnps$chromo, AGsnps$position, sep = "_")
 
 #Making SNP set of all SNPs common to both G and AG
-GAG.set <- intersect(Gsnps$id, Asnps$id)
+GAG.set <- intersect(Gsnps$id, AGsnps$id)
 
 #Subset G and AG files using logical vector to contain common snps
 Gsnps2 <- Gsnps[Gsnps$id %in% GAG.set, ]
@@ -36,4 +37,4 @@ f11snps$AGnInd <- AGsnps2$nInd
 head(f11snps)
 
 #Save the file
-write.table(f11snps, file="/Users/robinallsopp/Dropbox/PapersRobin/Data/f11snps.txt", quote=FALSE, row.names=FALSE, col.names=FALSE, sep="\t")
+write.table(f11snps,"f11snps.txt", quote=FALSE, row.names=FALSE, col.names=FALSE, sep="\t")
