@@ -1,0 +1,10 @@
+rm(list = ls())
+library(tidyverse)
+attach(assoc_lrt_chr11_4)
+a <- ggplot(assoc_lrt_chr11_4, aes(Chromosome, LRT))
+a <- a + geom_point(colour = "black")
+a <- a + geom_smooth(method = lm, se = FALSE)
+a <- a + theme_light() + ggtitle("PHENOTYPE-GENOTYPE ASSOCIATION")
+a <- a + labs(y= "LRT", x = "Chromosome 11") 
+a
+ggsave("./associationchromosome11.pdf", plot = last_plot(), device = "pdf")
