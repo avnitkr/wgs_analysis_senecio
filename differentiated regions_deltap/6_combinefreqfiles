@@ -49,4 +49,4 @@ head(f11_lennoxhead_snps)
 
 
 #Save the file
-write.table(f11_lennoxhead_snps, file="/Users/Avneet Kaur/Desktop/zoe/f11_lennoxhead_snps.txt", quote=FALSE, row.names=FALSE, col.names=FALSE, sep="\t")
+write.table(f11_lennoxhead_snps, file="/Users/Avneet Kaur/Desktop/zoe/f11_lennoxhead_snps.txt", quote=FALSE, row.names=FALSE, col.names=TRUE, sep="\t")
