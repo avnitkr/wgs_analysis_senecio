@@ -1,0 +1,52 @@
+#Reading in allele freqency files
+Gsnps <- gravitropic
+AGsnps <- agravitropic
+H1snps <- H01
+D1snps <- D01
+
+#Look at files
+head(Gsnps)
+head(AGsnps)
+head(H1snps)
+head(D1snps)
+
+#Add unique ID for each SNP
+Gsnps$id <- paste(Gsnps$chromo, Gsnps$position, sep = "_")
+AGsnps$id <- paste(AGsnps$chromo, AGsnps$position, sep = "_")
+H1snps$id <- paste(H1snps$chromo, H1snps$position, sep = "_")
+D1snps$id <- paste(D1snps$chromo, D1snps$position, sep = "_")
+
+#Making SNP set of all SNPs common to both G and AG
+GAG.set <- Reduce(intersect,list(Gsnps$id, AGsnps$id,H1snps$id, D1snps$id))
+
+
+#Subset G and AG files using logical vector to contain common snps
+Gsnps2 <- Gsnps[Gsnps$id %in% GAG.set, ]
+AGsnps2 <- AGsnps[AGsnps$id %in% GAG.set, ]
+H1snps2 <- H1snps[H1snps$id %in% GAG.set, ]
+D1snps2 <- D1snps[D1snps$id %in% GAG.set, ]
+
+#Check it worked
+all.equal(Gsnps2$id,AGsnps2$id,H1snps2$id,D1snps2$id)
+
+
+#Make master file
+f11_lennoxhead_snps <- Gsnps2
+colnames(f11_lennoxhead_snps)
+colnames(f11_lennoxhead_snps) <- c("contig", "position", "major", "minor", "Gfreq", "GnInd")
+
+#Add columns for AG to masterfile
+f11_lennoxhead_snps$AGfreq <- AGsnps2$knownEM
+f11_lennoxhead_snps$AGnInd <- AGsnps2$nInd
+f11_lennoxhead_snps$H1freq <- H1snps2$knownEM
+f11_lennoxhead_snps$H1nInd <- H1snps2$nInd
+f11_lennoxhead_snps$D1freq <- D1snps2$knownEM
+f11_lennoxhead_snps$D1nInd <- D1snps2$nInd
+
+
+#Check the masterfile
+head(f11_lennoxhead_snps)
+
+
+#Save the file
+write.table(f11_lennoxhead_snps, file="/Users/Avneet Kaur/Desktop/zoe/f11_lennoxhead_snps.txt", quote=FALSE, row.names=FALSE, col.names=FALSE, sep="\t")
