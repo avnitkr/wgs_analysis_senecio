@@ -1,0 +1,61 @@
+#Reading in allele freqency files
+Gsnps <- gravitropic_allele_frequency_assoc
+AGsnps <- agravitropic_allele_frequency_assoc
+assoc <- chr_nine_gwas
+
+
+#Look at files
+head(Gsnps)
+head(AGsnps)
+head(assoc)
+
+
+#Add unique ID for each SNP
+Gsnps$id <- paste(Gsnps$chromo, Gsnps$position, sep = "_")
+AGsnps$id <- paste(AGsnps$chromo, AGsnps$position, sep = "_")
+assoc$id <- paste(assoc$Chromosome, assoc$Position, sep = "_")
+
+
+#Making SNP set of all SNPs common to both G and AG
+GAG.set <- Reduce(intersect,list(Gsnps$id, AGsnps$id,assoc$id))
+
+
+#Subset G and AG files using logical vector to contain common snps
+Gsnps2 <- Gsnps[Gsnps$id %in% GAG.set, ]
+AGsnps2 <- AGsnps[AGsnps$id %in% GAG.set, ]
+assoc2 <- assoc[assoc$id %in% GAG.set, ]
+
+
+#Check it worked
+all.equal(Gsnps2$id,AGsnps2$id,assoc2$id)
+
+
+#Make master file
+sizeeffect_deltap_chrnine<- Gsnps2
+colnames(sizeeffect_deltap_chrnine)
+colnames(sizeeffect_deltap_chrnine) <- c("contig", "position", "Gmajor", "Gminor", "Ganc","Gfreq", "GnInd")
+
+#Add columns for AG to masterfile
+sizeeffect_deltap_chrnine$AGfreq <- AGsnps2$knownEM
+sizeeffect_deltap_chrnine$AGnInd <- AGsnps2$nInd
+sizeeffect_deltap_chrnine$AGmajor <- AGsnps2$major
+sizeeffect_deltap_chrnine$AGminor <- AGsnps2$minor
+sizeeffect_deltap_chrnine$AGanc <- AGsnps2$anc
+
+sizeeffect_deltap_chrnine$assocmajor <- assoc2$major
+sizeeffect_deltap_chrnine$assocminor<- assoc2$minor
+sizeeffect_deltap_chrnine$LRT <- assoc2$LRT
+sizeeffect_deltap_chrnine$beta <- assoc2$beta
+sizeeffect_deltap_chrnine$SE<- assoc2$SE
+
+
+
+
+
+
+#Check the masterfile
+head(sizeeffect_deltap_chrnine)
+
+
+#Save the file
+write.table(sizeeffect_deltap_chrnine, file="/Users/Avneet Kaur/Desktop/sizeeffect_deltap_chrnine.txt", quote=FALSE, row.names=FALSE, col.names=TRUE, sep="\t")
