@@ -63,3 +63,7 @@ head(sizeeffect_deltap_chrnine)
 
 #Save the file
 write.table(sizeeffect_deltap_chrnine, file="/Users/Avneet Kaur/Desktop/sizeeffect_deltap_chrnine.txt", quote=FALSE, row.names=FALSE, col.names=TRUE, sep="\t")
+
+library(ggplot2)
+ggplot(sizeeffect_deltap_chrnine, aes(x=delta_p, y=beta)) + geom_point()
+ggplot(sizeeffect_deltap_chrnine, aes(x=beta, y=delta_p)) + geom_point()
