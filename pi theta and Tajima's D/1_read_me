@@ -1,0 +1,5 @@
+#this script will NOT filter on Maf as we want to keep all positions to calculate thetas statistics.
+#It will simply filter on coverage.It calculates the saf, 1DSFS and thetas statistics by population.
+#Beware if ancestral sequenc is the reference (folded spectrum), not all stats are meaningful.
+#In my case , I am using reference as ancestral-- which makes site frequency spectrum folded.
+#For a folded site frequency spectrum - theta Watterson,theta Tajima and Tajima's D are interpretable!! 
