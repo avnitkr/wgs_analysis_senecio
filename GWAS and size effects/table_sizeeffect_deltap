@@ -65,5 +65,17 @@ head(sizeeffect_deltap_chrnine)
 write.table(sizeeffect_deltap_chrnine, file="/Users/Avneet Kaur/Desktop/sizeeffect_deltap_chrnine.txt", quote=FALSE, row.names=FALSE, col.names=TRUE, sep="\t")
 
 library(ggplot2)
-ggplot(sizeeffect_deltap_chrnine, aes(x=delta_p, y=beta)) + geom_point()
-ggplot(sizeeffect_deltap_chrnine, aes(x=beta, y=delta_p)) + geom_point()
+
+# basic scatterplot
+a<-ggplot(sizeeffect_deltap_chrnine, aes(x=delta_p, y=beta)) + geom_point()
+a <- a + theme_light() + ggtitle("Comparison of size effect and allele frequency differentiation in recombinant population")
+a <- a + labs(y= "size effect", x = "allele frequency differentiation (G-AG)") 
+a
+
+#distribution of size effects
+
+library(ggplot2)
+library(dplyr)
+attach(sizeeffect_deltap_chrnine)
+data<- sizeeffect_deltap_chrnine
+data %>% ggplot( aes(x=beta)) + geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)
