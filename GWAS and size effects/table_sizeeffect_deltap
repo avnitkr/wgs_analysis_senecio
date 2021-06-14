@@ -56,6 +56,10 @@ sizeeffect_deltap_chrnine$SE<- assoc2$SE
 #Check the masterfile
 head(sizeeffect_deltap_chrnine)
 
+attach(sizeeffect_deltap_chrnine)
+sizeeffect_deltap_chrnine$delta_p <- Gfreq - AGfreq
+head(sizeeffect_deltap_chrnine)
+
 
 #Save the file
 write.table(sizeeffect_deltap_chrnine, file="/Users/Avneet Kaur/Desktop/sizeeffect_deltap_chrnine.txt", quote=FALSE, row.names=FALSE, col.names=TRUE, sep="\t")
