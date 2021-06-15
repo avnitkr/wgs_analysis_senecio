@@ -1,0 +1,45 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=05:00:00
+#PBS -l select=1:ncpus=15:mem=60GB
+#PBS -N thetas
+
+cd $PBS_O_WORKDIR
+
+#setting the job population bam paths list
+BAMS=/30days/uqakaur3/recombinantpop/arraylists/bam-paths.txt
+
+#setting the target regions (format is contig:start-end)
+REGIONS=/30days/uqakaur3/pilot/region/sorted_chr9contig.txt
+
+#setting reference genome and its location
+REF=/90days/uqakaur3/Reference/SPD_CN1K_CtgRN.fasta
+
+module load angsd
+
+
+angsd -b $BAMS -P 15 -anc $REF -out thetas_recombinant \
+	-uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 \
+	-minMapQ 20 -minQ 20 -minInd 5 -setMinDepth 5 -setMaxDepth 60 -doCounts 1 \
+	-GL 2 -doSaf 1 -doMajorMinor 1 -doCounts 1 \
+	-doThetas 1 -pest Results/$POP.sfs
+  
+  
+  angsd -P $NB_CPU -underFlowProtect 1 \
+	-dosaf 1 -GL 2 -doMajorMinor 1 -doCounts 1 \
+	-anc 02_info/genome.fasta \
+	-remove_bads 1 -minMapQ 30 -minQ 20 -minInd $MIN_IND -setMaxDepth $MAX_DEPTH -setMinDepthInd $MIN_DEPTH \
+	-b $BAM_LIST -out 08_thetas/"$i"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR"
+	
+	echo "estimate real sfs for pop $i"
+	realSFS 08_thetas/"$i"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR".saf.idx -P $NB_CPU -nSites $NSITES  -maxIter 50 > 08_thetas/"$i"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR"."$NSITES"
+	file=08_thetas/"$i"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR"."$NSITES"
+	
+	Rscript 01_scripts/Rscripts/sum_sites_sfs.r "$file"
+	
+	echo "estimate thetas for pop $i"
+	angsd -P $NB_CPU -dosaf 1 -doThetas 1 -GL 2 -doMajorMinor 1 -underFlowProtect 1 \
+	-anc 02_info/genome.fasta -remove_bads 1 -minMapQ 30 -minQ 20 -minInd $MIN_IND -setMinDepthInd $MIN_DEPTH \
+	-b 07_fst_by_pop_pair/$GROUP/"$i"subsetbam.filelist \
+	-pest 08_thetas/"$i"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR"."$NSITES".dsfs \
+	-out 08_thetas/"$i"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR"
