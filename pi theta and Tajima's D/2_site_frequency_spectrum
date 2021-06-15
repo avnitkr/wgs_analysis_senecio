@@ -10,7 +10,7 @@ cd $PBS_O_WORKDIR
 BAMS=/30days/uqakaur3/recombinantpop/arraylists/gravitropicbam-paths.txt
 
 #setting the target regions (format is contig:start-end)
-REGIONS=/30days/uqakaur3/pilot/region/sorted_female_GR1.txt
+REGIONS=/30days/uqakaur3/pilot/region/sorted_linkagegroup_one.txt
 
 #setting reference genome and its location
 REF=/90days/uqakaur3/Reference/SPD_CN1K_CtgRN.fasta
@@ -28,7 +28,7 @@ MIN_IND=${MIN_IND_FLOAT%.*}
 MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
 
 module load angsd
-angsd -b $BAMS -P 15 -anc $REF -out recombinant_grav \
+angsd -b $BAMS -P 15 -rf $REGIONS -anc $REF -out recombinant_grav \
       -remove_bads 1 -minMapQ 30 -minQ 20 -minInd $MIN_IND -setMaxDepth $MAX_DEPTH -setMinDepthInd $MIN_DEPTH \
       -doCounts 1 \
       -GL 2 -doSaf 1
