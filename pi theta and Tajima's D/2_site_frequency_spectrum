@@ -1,0 +1,34 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=03:00:00
+#PBS -l select=1:ncpus=15:mem=40GB
+#PBS -N thetas
+
+cd $PBS_O_WORKDIR
+
+#setting the job population bam paths list
+BAMS=/30days/uqakaur3/recombinantpop/arraylists/gravitropicbam-paths.txt
+
+#setting the target regions (format is contig:start-end)
+REGIONS=/30days/uqakaur3/pilot/region/sorted_female_GR1.txt
+
+#setting reference genome and its location
+REF=/90days/uqakaur3/Reference/SPD_CN1K_CtgRN.fasta
+
+PERCENT_IND=0.5
+MIN_DEPTH=1
+
+#filter: will keep SNP with at least a coverage of this factor multiplied by the number of ind - across all ind.
+# advice: we usually set it at 2-4 times the expected coverage to remove repeated regions
+MAX_DEPTH_FACTOR=3
+
+N_IND=$(wc -l $BAM_LIST | cut -d " " -f 1)
+MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
+MIN_IND=${MIN_IND_FLOAT%.*}
+MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
+
+module load angsd
+angsd -b $BAMS -P 15 -anc $REF -out recombinant_grav \
+      -remove_bads 1 -minMapQ 30 -minQ 20 -minInd $MIN_IND -setMaxDepth $MAX_DEPTH -setMinDepthInd $MIN_DEPTH \
+      -doCounts 1 \
+      -GL 2 -doSaf 1
