@@ -1,0 +1,5 @@
+/home/uqakaur3/angsd/misc/realSFS print file.saf.idx | less -S 
+
+These values represent the sample allele frequency likelihoods at each site. 
+So the first value (after the chromosome and position columns) is the likelihood of having 0 copies of the derived allele, 
+the second indicates the probability of having 1 copy and so on. Note that these values are in log format and scaled so that the maximum is 0.
