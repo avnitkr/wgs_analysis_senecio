@@ -21,6 +21,6 @@ module load angsd
 
 angsd -b $BAMS -P 15 -rf $REGIONS -ref $REF -anc $REF -out recombinant_grav \
       -GL 2 -doSaf 1 \
-      -doThetas 1 -pest /30days/uqakaur3/thetas/recombinant_grav.folded.sfs
+      -doThetas 1 -pest /30days/uqakaur3/thetas/grav/recombinant_grav.folded.sfs
 
 #run with filters as well
