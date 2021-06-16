@@ -24,3 +24,12 @@ angsd -b $BAMS -P 15 -rf $REGIONS -ref $REF -anc $REF -out recombinant_grav \
       -doThetas 1 -pest /30days/uqakaur3/thetas/grav/recombinant_grav.folded.sfs
 
 #run with filters as well
+
+
+
+#replace bampaths
+#D01_bam-paths.txt
+#H01_bam-paths.txt
+#gravitropicbam-paths.txt
+#agravitropicbam-paths.txt
+#bam-paths.txt 
