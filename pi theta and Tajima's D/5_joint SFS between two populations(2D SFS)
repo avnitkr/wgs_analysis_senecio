@@ -8,3 +8,6 @@ cd $PBS_O_WORKDIR
 /home/uqakaur3/angsd/misc/realSFS /30days/uqakaur3/thetas/h01/h01_sfs.saf.idx /30days/uqakaur3/thetas/d01/d01_sfs.saf.idx > h01.d01.sfs
 /home/uqakaur3/angsd/misc/realSFS /30days/uqakaur3/thetas/agrav/recombinant_agrav.saf.idx /30days/uqakaur3/thetas/grav/recombinant_grav.saf.idx > agrav.grav.sfs
 
+#can add -nSites option so that realSFS can go fast.
+#-P 15 to specify the number of CPU required.
+
