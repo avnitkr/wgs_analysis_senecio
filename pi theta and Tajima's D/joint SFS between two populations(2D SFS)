@@ -1,0 +1,10 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=02:00:00
+#PBS -l select=1:ncpus=15:mem=30GB
+#PBS -N 2Dsfs
+
+cd $PBS_O_WORKDIR
+/home/uqakaur3/angsd/misc/realSFS /30days/uqakaur3/thetas/h01/h01_sfs.saf.idx /30days/uqakaur3/thetas/d01/d01_sfs.saf.idx > h01.d01.sfs
+/home/uqakaur3/angsd/misc/realSFS /30days/uqakaur3/thetas/agrav/recombinant_agrav.saf.idx /30days/uqakaur3/thetas/grav/recombinant_grav.saf.idx > agrav.grav.sfs
+
