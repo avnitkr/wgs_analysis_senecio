@@ -1,0 +1,8 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=02:00:00
+#PBS -l select=1:ncpus=15:mem=30GB
+#PBS -N sfs
+
+cd $PBS_O_WORKDIR
+/home/uqakaur3/angsd/misc/realSFS recombinant_sfs.saf.idx -fold 1 > recombinant.folded.sfs
