@@ -11,4 +11,4 @@ cd $PBS_O_WORKDIR
 #can add -nSites option so that realSFS can go fast.
 #-P 15 to specify the number of CPU required.
 #not able to estimate 2d sfs for grav-agrav -- figure out -- maybe try settings of claire 
-#but h01.d01 is running still need to optimise time!!
+#but h01.d01 is running still need to optimise time-- used around 1 hour 10 minutes and job finished !!
