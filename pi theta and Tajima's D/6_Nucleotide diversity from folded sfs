@@ -17,6 +17,10 @@ REF=/90days/uqakaur3/Reference/SPD_CN1K_CtgRN.fasta
 
 module load angsd
 
+#without filters
+
 angsd -b $BAMS -P 15 -rf $REGIONS -ref $REF -anc $REF -out recombinant_grav \
-	    -GL 2 -doSaf 1 \
-	    -doThetas 1 -pest /30days/uqakaur3/thetas/recombinant_grav.folded.sfs
+      -GL 2 -doSaf 1 \
+      -doThetas 1 -pest /30days/uqakaur3/thetas/recombinant_grav.folded.sfs
+
+#run with filters as well
