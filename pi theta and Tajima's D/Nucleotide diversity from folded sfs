@@ -1,0 +1,22 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=02:00:00
+#PBS -l select=1:ncpus=15:mem=30GB
+#PBS -N nucleotide_diversity
+
+cd $PBS_O_WORKDIR
+
+#setting the job population bam paths list
+BAMS=/30days/uqakaur3/recombinantpop/arraylists/gravitropicbam-paths.txt
+
+#setting the target regions (format is contig:start-end)
+REGIONS=/30days/uqakaur3/pilot/region/sorted_linkagegroup_one.txt
+
+#setting reference genome and its location
+REF=/90days/uqakaur3/Reference/SPD_CN1K_CtgRN.fasta
+
+module load angsd
+
+angsd -b $BAMS -P 15 -rf $REGIONS -ref $REF -anc $REF -out recombinant_grav \
+	    -GL 2 -doSaf 1 \
+	    -doThetas 1 -pest /30days/uqakaur3/thetas/recombinant_grav.folded.sfs
