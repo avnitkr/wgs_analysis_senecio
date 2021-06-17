@@ -1,8 +1,8 @@
 #!/bin/bash
 #PBS -A UQ-SCI-BiolSci
-#PBS -l walltime=02:00:00
-#PBS -l select=1:ncpus=15:mem=30GB
+#PBS -l walltime=05:00:00
+#PBS -l select=1:ncpus=15:mem=60GB
 #PBS -N sfs
 
 cd $PBS_O_WORKDIR
-/home/uqakaur3/angsd/misc/realSFS recombinant.saf.idx -P 15 -maxIter 50 > output  
+/home/uqakaur3/angsd/misc/realSFS recombinant_lg_one.saf.idx  -P 15 -maxIter 50 > recombinant_lg_one
