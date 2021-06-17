@@ -6,6 +6,6 @@
 
 cd $PBS_O_WORKDIR
 
-/home/uqakaur3/angsd/misc/thetaStat do_stat /30days/uqakaur3/thetas/grav/recombinant_grav.thetas.idx
+/home/uqakaur3/angsd/misc/thetaStat do_stat recombinant_thetas.thetas.idx
 
 
