@@ -33,4 +33,35 @@ angsd -P 15 -underFlowProtect 1 \
       -anc $REF \
       -remove_bads 1 -minMapQ 30 -minQ 20 -minInd $MIN_IND -setMaxDepth $MAX_DEPTH -setMinDepthInd $MIN_DEPTH \
       -b $BAMS -rf $REGIONS -out recombinant
+      
+#0 sites remaining after filtering pretty weird
+      
+      
+#without filters
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=03:00:00
+#PBS -l select=1:ncpus=15:mem=40GB
+#PBS -N thetas
+
+cd $PBS_O_WORKDIR
+
+#setting the job population bam paths list
+BAMS=/30days/uqakaur3/recombinantpop/arraylists/bam-paths.txt
+
+#setting the target regions (format is contig:start-end)
+REGIONS=/30days/uqakaur3/pilot/region/sorted_linkagegroup_one.txt
+
+#setting reference genome and its location
+REF=/90days/uqakaur3/Reference/SPD_CN1K_CtgRN.fasta
+
+PERCENT_IND=0.5
+MIN_DEPTH=1
+
+
+module load angsd
+angsd -P 15 -underFlowProtect 1 \
+      -dosaf 1 -GL 2 -doMajorMinor 1 -doCounts 1 \
+      -anc $REF \
+      -b $BAMS -rf $REGIONS -out recombinant
  
