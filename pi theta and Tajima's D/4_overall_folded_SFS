@@ -5,4 +5,4 @@
 #PBS -N sfs
 
 cd $PBS_O_WORKDIR
-/home/uqakaur3/angsd/misc/realSFS recombinant_lg_one.saf.idx  -P 15 -maxIter 50 > recombinant_lg_one
+/home/uqakaur3/angsd/misc/realSFS recombinant_lg_one.saf.idx  -P 15 -nSites $NSITES -maxIter 50 > recombinant_lg_one
