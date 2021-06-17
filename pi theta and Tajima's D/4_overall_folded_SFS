@@ -5,4 +5,4 @@
 #PBS -N sfs
 
 cd $PBS_O_WORKDIR
-/home/uqakaur3/angsd/misc/realSFS recombinant_sfs.saf.idx -fold 1 > recombinant.folded.sfs
+/home/uqakaur3/angsd/misc/realSFS recombinant.saf.idx -P 15 -maxIter 50 > output  
