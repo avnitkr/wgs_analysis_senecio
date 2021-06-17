@@ -34,7 +34,9 @@ angsd -P 15 -underFlowProtect 1 \
       -remove_bads 1 -minMapQ 30 -minQ 20 -minInd $MIN_IND -setMaxDepth $MAX_DEPTH -setMinDepthInd $MIN_DEPTH \
       -b $BAMS -rf $REGIONS -out recombinant
       
-#0 sites remaining after filtering pretty weird
+#0 sites remaining after filtering pretty weird-- try without any filters see below
+#is it just this region
+#change region file and see what happens - switching to chr nine contigs!!
       
       
 #without filters
