@@ -1,0 +1,39 @@
+#!/bin/bash
+#PBS -l ncpus=40
+#PBS -l mem=90GB
+#PBS -l jobfs=3TB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=20:00:00
+#PBS -l storage=/g/data/ht96
+
+
+
+DIR=/g/data/ht96/Avneet_UQ/recombinantpop/bam_paths
+
+ANGSD=/g/data/ht96/Avneet_UQ/programs/angsd/
+
+ANC=/g/data/ht96/Avneet_UQ/reference/SPD_CN1K_CtgRN.fasta
+
+for POP in GRAV AGRAV FELEVEN
+
+do
+
+    echo $POP
+    ${ANGSD}/angsd -b $DIR/$POP'_bams.txt' -anc $ANC -out /g/data/ht96/Avneet_UQ/recombinantpop/thetas/one_folded_saf/$POP/$POP \
+                   -remove_bads 1 \
+                   -minMapQ 30 -minQ 20 -doCounts 1 \
+                   -GL 2 -doSaf 1 -doMajorMinor 1 -nThreads 40 -underFlowProtect 1
+done
+
+
+
+
+
+##Claire 
+
+angsd -P $NB_CPU -underFlowProtect 1 \
+	-dosaf 1 -GL 2 -doMajorMinor 1 -doCounts 1 \
+	-anc 02_info/genome.fasta \
+	-remove_bads 1 -minMapQ 30 -minQ 20 -minInd $MIN_IND -setMaxDepth $MAX_DEPTH -setMinDepthInd $MIN_DEPTH \
+	-b $BAM_LIST -out 08_thetas/"$i"_pctind"$PERCENT_IND"_maxdepth"$MAX_DEPTH_FACTOR"
