@@ -11,7 +11,7 @@
 
 DIR=/g/data/ht96/Avneet_UQ/recombinantpop/bam_paths
 
-REGION=/g/data/ht96/Avneet_UQ/recombinantpop/lg_one.txt
+REGION=/g/data/ht96/Avneet_UQ/recombinantpop/regions/lg_one.txt
 
 ANGSD=/g/data/ht96/Avneet_UQ/programs/angsd/
 
