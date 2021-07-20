@@ -11,6 +11,8 @@
 
 DIR=/g/data/ht96/Avneet_UQ/recombinantpop/bam_paths
 
+REGION=/g/data/ht96/Avneet_UQ/recombinantpop/lg_one.txt
+
 ANGSD=/g/data/ht96/Avneet_UQ/programs/angsd/
 
 ANC=/g/data/ht96/Avneet_UQ/reference/SPD_CN1K_CtgRN.fasta
@@ -20,13 +22,23 @@ for POP in GRAV AGRAV FELEVEN
 do
 
     echo $POP
-    ${ANGSD}/angsd -b $DIR/$POP'_bams.txt' -anc $ANC -out /g/data/ht96/Avneet_UQ/recombinantpop/thetas/one_folded_saf/$POP/$POP \
+    ${ANGSD}/angsd -b $DIR/$POP'_bams.txt' -anc $ANC -rf $REGION -out /g/data/ht96/Avneet_UQ/recombinantpop/thetas/one_folded_saf/$POP/$POP_lg_one \
                    -remove_bads 1 \
                    -minMapQ 30 -minQ 20 -doCounts 1 \
                    -GL 2 -doSaf 1 -doMajorMinor 1 -nThreads 40 -underFlowProtect 1
 done
 
+##physalia
+for POP in JIGA PANY MBNS MAQU
 
+do
+
+    echo $POP
+    ${ANGSD}/angsd -b $DIR/$POP'_bams.txt' -ref $REF -anc $ANC -out /scratch/ht96/ak2993/angsd_tut/sfs/$POP \
+               -uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -C 50 \
+               -minMapQ 20 -minQ 20 -minInd 5 -setMinDepth 7 -setMaxDepth 30 -doCounts 1 \
+               -GL 1 -doSaf 1 -nThreads 10
+done
 
 
 
