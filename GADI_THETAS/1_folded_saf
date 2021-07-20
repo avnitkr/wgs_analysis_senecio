@@ -22,7 +22,7 @@ for POP in GRAV AGRAV FELEVEN
 do
 
     echo $POP
-    ${ANGSD}/angsd -b $DIR/$POP'_bams.txt' -anc $ANC -rf $REGION -out /g/data/ht96/Avneet_UQ/recombinantpop/thetas/one_folded_saf/$POP/$POP_lg_one \
+    ${ANGSD}/angsd -b $DIR/$POP'_bams.txt' -anc $ANC -rf $REGION -out /g/data/ht96/Avneet_UQ/recombinantpop/thetas/one_folded_saf/$POP/$POP'_lg_one' \
                    -remove_bads 1 \
                    -minMapQ 30 -minQ 20 -doCounts 1 \
                    -GL 2 -doSaf 1 -doMajorMinor 1 -nThreads 40 -underFlowProtect 1
