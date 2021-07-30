@@ -1,4 +1,88 @@
 #Reading in allele freqency files
+Gsnps <- grav
+AGsnps <- agrav
+h01snps<-h01
+d01snps<-d01
+assoc <- gwas_all_lg
+
+
+#Look at files
+head(Gsnps)
+head(AGsnps)
+
+head(h01snps)
+head(d01snps)
+head(assoc)
+
+
+#Add unique ID for each SNP
+Gsnps$id <- paste(Gsnps$chromo, Gsnps$position, sep = "_")
+AGsnps$id <- paste(AGsnps$chromo, AGsnps$position, sep = "_")
+h01snps$id <- paste(h01snps$chromo, h01snps$position, sep = "_")
+d01snps$id <- paste(d01snps$chromo, d01snps$position, sep = "_")
+assoc$id <- paste(assoc$Chromosome, assoc$Position, sep = "_")
+
+
+#Making SNP set of all SNPs common to both G and AG
+GAG.set <- Reduce(intersect,list(Gsnps$id, AGsnps$id,h01snps$id,d01snps$id,assoc$id))
+
+
+#Subset G and AG files using logical vector to contain common snps
+Gsnps2 <- Gsnps[Gsnps$id %in% GAG.set, ]
+AGsnps2 <- AGsnps[AGsnps$id %in% GAG.set, ]
+h01snps2 <- h01snps[h01snps$id %in% GAG.set, ]
+d01snps2 <- d01snps[AGsnps$id %in% GAG.set, ]
+assoc2 <- assoc[assoc$id %in% GAG.set, ]
+
+
+#Check it worked
+all.equal(Gsnps2$id,AGsnps2$id,h01snps2$id,d01snps2$id,assoc2$id)
+
+
+#Make master file
+gwas_f11_lh<- Gsnps2
+colnames(gwas_f11_lh)
+colnames(gwas_f11_lh) <- c("contig", "position", "Gmajor", "Gminor","Gfreq", "GnInd")
+
+#Add columns for AG to masterfile
+gwas_f11_lh$AGfreq <- AGsnps2$knownEM
+gwas_f11_lh$AGnInd <- AGsnps2$nInd
+gwas_f11_lh$AGmajor <- AGsnps2$major
+gwas_f11_lh$AGminor <- AGsnps2$minor
+
+gwas_f11_lh$h01freq <- h01snps2$knownEM
+gwas_f11_lh$h01nInd <- h01snps2$nInd
+gwas_f11_lh$h01major <- h01snps2$major
+gwas_f11_lh$h01minor <- h01snps2$minor
+
+gwas_f11_lh$d01freq <- d01snps2$knownEM
+gwas_f11_lh$d01nInd <- d01snps2$nInd
+gwas_f11_lh$d01major <- d01snps2$major
+gwas_f11_lh$d01minor <- d01snps2$minor
+
+gwas_f11_lh$assocmajor <- assoc2$major
+gwas_f11_lh$assocminor<- assoc2$minor
+gwas_f11_lh$LRT <- assoc2$LRT
+gwas_f11_lh$beta <- assoc2$beta
+gwas_f11_lh$SE<- assoc2$SE
+
+
+
+
+
+
+#Check the masterfile
+head(gwas_all_lg)
+
+
+attach(sizeeffect_deltap_chrnine)
+sizeeffect_deltap_chrnine$delta_p <- Gfreq - AGfreq
+head(sizeeffect_deltap_chrnine)
+
+
+#Save the file
+write.table(gwas_f11_lh, file="/Users/Avneet Kaur/Desktop/gwas_f11_lh", quote=FALSE, row.names=FALSE, col.names=TRUE, sep="\t")
+#Reading in allele freqency files
 Gsnps <- gravitropic_allele_frequency_assoc
 AGsnps <- agravitropic_allele_frequency_assoc
 assoc <- chr_nine_gwas
