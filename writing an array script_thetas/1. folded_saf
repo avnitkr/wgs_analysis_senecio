@@ -1,1 +1,48 @@
-xx
+#!/bin/bash
+#PBS -l ncpus=20
+#PBS -l mem=80GB
+#PBS -l jobfs=110GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=5:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+#!/bin/bash
+#PBS -l ncpus=20
+#PBS -l mem=700GB
+#PBS -l jobfs=600GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=15:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+#loading the program
+module load samtools/1.10
+
+#setting the list of populations
+POPS=(AG G D01 H01)
+
+#setting the LG
+LINKAGEGROUPS=(LG_1 LG_2 LG_3 LG_4 LG_4 LG_5 LG_6 LG_7 LG_8 LG_9 LG_10 LG_11 LG_12 LG_13 LG_14 LG_15 LG_16 LG_17 LG_18 LG_19 LG_20)
+
+GENES=(ABCB6_1 ABCB6_2 SGR5 SGR9)
+
+#setting the job LINKAGE GROUP
+LINKAGEGROUP=${LINKAGEGROUPS[${PBS_ARRAY_INDEX}-1]}
+
+#setting the LINKAGE GROUP region
+REGION=$(cat /30days/uqralls1/Coverage/${LINKAGEGROUP}_region.txt)
+
+#looping through every population
+for POP in ${POPS[@]}
+  do
+  #setting the list of bams
+  BAMLIST=/home/uqralls1/bams_${POP}
+  
+  #calculating depth for each base in the gene-region for each bam
+  for BAM in $(cat ${BAMLIST})
+  do
+  samtools depth -r ${REGION} -a -Q 1 ${BAM} > /30days/uqralls1/Coverage/${GENE}/${POP}/${GENE}_$(basename ${BAM%_*})_sites2.txt
+  done 
+done
