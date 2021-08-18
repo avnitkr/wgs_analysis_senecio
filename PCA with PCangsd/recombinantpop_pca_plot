@@ -1,7 +1,7 @@
 R
 library(tidyverse)
 library(ggplot2)
-cov <- as.matrix(read.table("/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/one/lg_one.cov", header = F))
+cov <- as.matrix(read.table("/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/two/lg_two.cov", header = F))
 
 
 
@@ -29,25 +29,25 @@ pca = ggplot(data = df, aes(x=V2, y=V3, fill = pop, colour = pop)) +
   geom_point(size = 3, shape = 21) +
   xlab("Principal component 1") +
   ylab("Principal component 2")
-pca <- pca + theme_light() + ggtitle("Linkage Group 1")
+pca <- pca + theme_light() + ggtitle("Linkage Group 2")
 
-ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/one/lg_one_pca12_plot.png", plot = pca)
+ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/two/lg_two_pca12_plot.png", plot = pca)
 
 pca_a = ggplot(data = df, aes(x=V2, y=V4, fill = pop, colour = pop)) +
   geom_point(size = 3, shape = 21) +
   xlab("Principal component 1") +
   ylab("Principal component 3")
-pca_a <- pca_a + theme_light() + ggtitle("Linkage Group 1")
+pca_a <- pca_a + theme_light() + ggtitle("Linkage Group 2")
 
-ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/one/lg_one_pca13_plot.png", plot = pca_a)
+ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/two/lg_two_pca13_plot.png", plot = pca_a)
 
 pca_b = ggplot(data = df, aes(x=V3, y=V4, fill = pop, colour = pop)) +
   geom_point(size = 3, shape = 21) +
   xlab("Principal component 2") +
   ylab("Principal component 3")
-pca_b <- pca_b + theme_light() + ggtitle("Linkage Group 1")
+pca_b <- pca_b + theme_light() + ggtitle("Linkage Group 2")
 
-ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/one/lg_one_pca23_plot.png", plot = pca_b)
+ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/two/lg_two_pca23_plot.png", plot = pca_b)
 
 
 
