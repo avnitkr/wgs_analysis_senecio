@@ -47,7 +47,7 @@ pca_b = ggplot(data = df, aes(x=V3, y=V4, fill = pop, colour = pop)) +
   ylab("Principal component 3")
 pca_b <- pca_b + theme_light() + ggtitle("20 Linkage Group")
 
-ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/lg_two_pca23_plot.png", plot = pca_b)
+ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/lg_all_pca23_plot.png", plot = pca_b)
 
 
 
