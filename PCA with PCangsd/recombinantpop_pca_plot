@@ -49,6 +49,15 @@ pca_b <- pca_b + theme_light() + ggtitle("Linkage Group 1")
 
 ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/one/lg_one_pca23_plot.png", plot = pca_b)
 
+
+
+
+
+
+
+
+
+
 #pca = ggplot(data = df, aes(x=V2, y=V3)) + geom_point()
 
 #ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/two/pca_lg_two_pcangsd_plot.pdf", plot = pca)
