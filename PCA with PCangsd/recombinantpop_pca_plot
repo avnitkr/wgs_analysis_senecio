@@ -1,7 +1,7 @@
 R
 library(tidyverse)
 library(ggplot2)
-cov <- as.matrix(read.table("/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/lg_all.cov", header = F))
+cov <- as.matrix(read.table("/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/three/lg_three.cov", header = F))
 
 
 
@@ -22,32 +22,39 @@ mme.pca <- eigen(cov) #perform the pca using the eigen function.
 eigenvectors = mme.pca$vectors #extract eigenvectors 
 pca.vectors = as.data.frame(cbind(pop, eigenvectors)) #combine with our population assignments
 df = type_convert(pca.vectors)
+pca.eigenval.sum = sum(mme.pca$values) #sum of eigenvalues
+varPC1 <- (mme.pca$values[1]/pca.eigenval.sum)*100 #Variance explained by PC1
+varPC1 <- round(varPC1,digits=2)
+varPC2 <- (mme.pca$values[2]/pca.eigenval.sum)*100 #Variance explained by PC2
+varPC2 <- round(varPC2,digits=2)
+varPC3 <- (mme.pca$values[3]/pca.eigenval.sum)*100 #Variance explained by PC3
+varPC3 <- round(varPC3,digits=2)
 
 
 #plot PC1 vs PC2 using ggplot
 pca = ggplot(data = df, aes(x=V2, y=V3, fill = pop, colour = pop)) +
   geom_point(size = 3, shape = 21) +
-  xlab("Principal component 1") +
-  ylab("Principal component 2")
-pca <- pca + theme_light() + ggtitle("20 Linkage Group")
+  xlab(paste("Principal component 1 (" , varPC1, ")")) +
+  ylab(paste("Principal component 2 (" , varPC2, ")"))
+pca <- pca + theme_light() + ggtitle("Linkage Group 3")
 
-ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/lg_all_pca12_plot.png", plot = pca)
+ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/three/lg_three_pca12_plot.png", plot = pca)
 
 pca_a = ggplot(data = df, aes(x=V2, y=V4, fill = pop, colour = pop)) +
   geom_point(size = 3, shape = 21) +
-  xlab("Principal component 1") +
-  ylab("Principal component 3")
-pca_a <- pca_a + theme_light() + ggtitle("20 Linkage Group")
+  xlab(paste("Principal component 1 (" , varPC1, ")")) +
+  ylab(paste("Principal component 3 (" , varPC3, ")"))
+pca_a <- pca_a + theme_light() + ggtitle("Linkage Group 3")
 
-ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/lg_all_pca13_plot.png", plot = pca_a)
+ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/three/lg_three_pca13_plot.png", plot = pca_a)
 
 pca_b = ggplot(data = df, aes(x=V3, y=V4, fill = pop, colour = pop)) +
   geom_point(size = 3, shape = 21) +
-  xlab("Principal component 2") +
-  ylab("Principal component 3")
-pca_b <- pca_b + theme_light() + ggtitle("20 Linkage Group")
+  xlab(paste("Principal component 2 (" , varPC2, ")")) +
+  ylab(paste("Principal component 3 (" , varPC3, ")"))
+pca_b <- pca_b + theme_light() + ggtitle("Linkage Group 3")
 
-ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/lg_all_pca23_plot.png", plot = pca_b)
+ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/three/lg_three_pca23_plot.png", plot = pca_b)
 
 
 
