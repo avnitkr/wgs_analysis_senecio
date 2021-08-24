@@ -1,0 +1,56 @@
+R
+library(tidyverse)
+library(ggplot2)
+cov <- as.matrix(read.table("/g/data/ht96/Avneet_UQ/lennox_head_pca/pcangsd/all_lg_lh.cov", header = F))
+
+
+
+#We will also add a column with population assingments
+
+
+pop <- c("D01261","D01230","D01252","D01219","D01205","D01220","D01265","D01273","D01259","D01236","D01251","D01203","D01225","D01213","D01218"
+         ,"D01256","D01231","D01250","D01243","D01255","D01209","D01223","D01262","D01233","D01242","D01215","D01241","D01208","D01228","D01224"
+         ,"D01254","D01247","D01226","D01238","D01240"
+	       ,"H01249","H01280"                                                                   
+	       ,"H01219","H01259","H01243","H01207","H01255","H01201","H01234","H01286","H01233","H01257","H01244","H01248","H01238","H01250"
+         ,"H01281","H01265","H01287","H01276","H01262","H01247","H01245","H01231","H01288","H01289","H01297","H01212","H01277")
+	 
+mme.pca <- eigen(cov) #perform the pca using the eigen function. 
+
+eigenvectors = mme.pca$vectors #extract eigenvectors 
+pca.vectors = as.data.frame(cbind(pop, eigenvectors)) #combine with our population assignments
+df = type_convert(pca.vectors)
+
+pca.eigenval.sum = sum(mme.pca$values) #sum of eigenvalues
+varPC1 <- (mme.pca$values[1]/pca.eigenval.sum)*100 #Variance explained by PC1
+varPC1 <- round(varPC1,digits=2)
+varPC2 <- (mme.pca$values[2]/pca.eigenval.sum)*100 #Variance explained by PC2
+varPC2 <- round(varPC2,digits=2)
+varPC3 <- (mme.pca$values[3]/pca.eigenval.sum)*100 #Variance explained by PC3
+varPC3 <- round(varPC3,digits=2)
+
+
+#plot PC1 vs PC2 using ggplot
+pca = ggplot(data = df, aes(x=V2, y=V3, fill = pop, colour = pop)) +
+  geom_point(size = 3, shape = 21) +
+  xlab("Principal component 1 (" , varPC1, ")")) +
+  ylab("Principal component 2 (" , varPC2, ")"))
+pca <- pca + theme_light() + ggtitle("ALL LG LENNOX HEAD")
+
+ggsave(filename = "/g/data/ht96/Avneet_UQ/lennox_head_pca/pcangsd/lh_lg_all_pca12_plot.png", plot = pca)
+
+pca_a = ggplot(data = df, aes(x=V2, y=V4, fill = pop, colour = pop)) +
+  geom_point(size = 3, shape = 21) +
+  xlab("Principal component 1 (" , varPC1, ")")) +
+  ylab("Principal component 3 (" , varPC3, ")"))
+pca_a <- pca_a + theme_light() + ggtitle("ALL LG LENNOX HEAD")
+
+ggsave(filename = "/g/data/ht96/Avneet_UQ/lennox_head_pca/pcangsd/lh_lg_all_pca13_plot.png", plot = pca_a)
+
+pca_b = ggplot(data = df, aes(x=V3, y=V4, fill = pop, colour = pop)) +
+  geom_point(size = 3, shape = 21) +
+  xlab("Principal component 2 (" , varPC2, ")")) +
+  ylab("Principal component 3 (" , varPC3, ")"))
+pca_b <- pca_b + theme_light() + ggtitle("ALL LG LENNOX HEAD")
+
+ggsave(filename = "/g/data/ht96/Avneet_UQ/lennox_head_pca/pcangsd/lh_lg_all_pca23_plot.png", plot = pca_b)
