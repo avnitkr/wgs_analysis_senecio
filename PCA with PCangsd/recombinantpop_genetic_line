@@ -52,7 +52,7 @@ pca = ggplot(data = df, aes(x=V2, y=V3, fill = pop, colour = pop)) +
   ylab(paste("Principal component 2 (" , varPC2, ")"))
 pca <- pca + theme_light() + ggtitle("ALL Linkage Group")
 
-ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/gl_env_lg_all_pca12_plot.png", plot = pca)
+ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/gl_lg_all_pca12_plot.png", plot = pca)
 
 pca_a = ggplot(data = df, aes(x=V2, y=V4, fill = pop, colour = pop)) +
   geom_point(size = 3, shape = 21) +
@@ -60,7 +60,7 @@ pca_a = ggplot(data = df, aes(x=V2, y=V4, fill = pop, colour = pop)) +
   ylab(paste("Principal component 3 (" , varPC3, ")"))
 pca_a <- pca_a + theme_light() + ggtitle("ALL Linkage Group")
 
-ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/gl_env_lg_all_pca13_plot.png", plot = pca_a)
+ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/gl_lg_all_pca13_plot.png", plot = pca_a)
 
 pca_b = ggplot(data = df, aes(x=V3, y=V4, fill = pop, colour = pop)) +
   geom_point(size = 3, shape = 21) +
@@ -68,4 +68,4 @@ pca_b = ggplot(data = df, aes(x=V3, y=V4, fill = pop, colour = pop)) +
   ylab(paste("Principal component 3 (" , varPC3, ")"))
 pca_b <- pca_b + theme_light() + ggtitle("ALL Linkage Group")
 
-ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/lg_env_all_pca23_plot.png", plot = pca_b)
+ggsave(filename = "/g/data/ht96/Avneet_UQ/recombinant_pop_pca/pcangsd/all/gl_lg_all_pca23_plot.png", plot = pca_b)
