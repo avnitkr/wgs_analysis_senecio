@@ -1,0 +1,34 @@
+#agravitropic full plot
+attach(ag_lg_one_ld_by_1)
+library(ggplot2)
+
+ag_lg_one_ld_by_1<-ag_lg_one_ld_by_1[-which(ag_lg_one_ld_by_1$Pos1==ag_lg_one_ld_by_1$Pos2),]
+head(ag_lg_one_ld_by_1)
+
+variable_name=0.02
+
+ag_lg_one_ld_by_1_var<-ag_lg_one_ld_by_1[ag_lg_one_ld_by_1$Percent==variable_name,]
+head(ag_lg_one_ld_by_1_var)
+
+ggplot(ag_lg_one_ld_by_1_var,aes(x=Pos1/1000,y=Pos2/1000)) + theme_classic() +
+  geom_tile(aes(fill=R2))+
+  scale_fill_gradientn(colours=c("white","lightgrey","grey80","turquoise","deepskyblue3","blue3","navyblue","black"), limits=c(0,1), values=c(0,0.125,0.25,0.375,0.5,0.675,0.75,1), name="R2")+ xlab("position (Mb)") + ylab("position(Mb)") +
+  scale_x_continuous(expand=c(0.02,0))+
+  scale_y_continuous(expand=c(0.02,0)) +
+  coord_fixed(ratio = 1)
+#half plot
+attach(ag_lg_one_ld_by_1)
+library(ggplot2)
+ag_lg_one_ld_by_1<-ag_lg_one_ld_by_1[-which(ag_lg_one_ld_by_1$Pos1>=ag_lg_one_ld_by_1$Pos2),]
+head(ag_lg_one_ld_by_1)
+
+variable_name=0.02
+
+ag_lg_one_ld_by_1_var<-ag_lg_one_ld_by_1[ag_lg_one_ld_by_1$Percent==variable_name,]
+head(ag_lg_one_ld_by_1_var)
+
+ggplot(ag_lg_one_ld_by_1_var,aes(x=Pos1/1000,y=Pos2/1000)) + theme_classic() +
+  geom_tile(aes(fill=R2))+
+  scale_fill_gradientn(colours=c("white","lightgrey","grey80","turquoise","deepskyblue3","blue3","navyblue","black"), limits=c(0,1), values=c(0,0.125,0.25,0.375,0.5,0.675,0.75,1), name="R2")+ xlab("position (Mb)") + ylab("position(Mb)") +
+  scale_x_continuous(expand=c(0.02,0))+
+  scale_y_continuous(expand=c(0.02,0)) + ggtitle("LG 1 AGRAV")+coord_fixed(ratio = 1)
