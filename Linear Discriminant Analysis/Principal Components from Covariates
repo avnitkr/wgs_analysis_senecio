@@ -21,4 +21,4 @@ df = type_convert(pca.vectors)
 
 pc <- df [,1:8]
 
-write.table(pc, "E:/Dropbox (OL)/Papers Avneet/11 - LH and Feleven genomics/Pilot_1/LDA/LDA_R/PC_R/PC_lg_one.txt",quote=FALSE, row.names=FALSE, col.names=FALSE, sep="\t")
+write.table(pc, "E:/Dropbox (OL)/Papers Avneet/11 - LH and Feleven genomics/Pilot_1/LDA/LDA_R/PC_R/PC_lg_one.txt",quote=FALSE, row.names=FALSE, col.names=TRUE, sep="\t")
