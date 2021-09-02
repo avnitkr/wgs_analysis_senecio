@@ -1,0 +1,24 @@
+library(tidyverse)
+attach(lg_one)
+cov <- lg_one
+
+pop <- c("AGB","AGC","AGB","AGC","AGC","AGA","AGA","AGC","AGB","AGB","AGA","AGC","AGA","AGC","AGA"
+         ,"AGC","AGC","AGA","AGA","AGC","AGA","AGA","AGA","AGC","AGB","AGA","AGB","AGB","AGA","AGB"
+         ,"AGC","AGB","AGA","AGC","AGB","AGA","AGC","AGB","AGC","AGA","AGB","AGA","AGA","AGA","AGB"
+         ,"AGB","AGB","AGA","AGB","AGB","AGA","AGB","AGA","AGA","AGB","AGA","AGC","AGA","AGA","AGA"
+         ,"AGA","AGB"                                                                   
+         ,"GC","GC","GA","GC","GA","GA","GC","GA","GC","GA","GB","GC","GA","GB"
+         ,"GC","GA","GB","GC","GB","GC","GC","GA","GA","GA","GC","GC","GC","GA","GC"
+         ,"GC","GC","GB","GA","GC","GA","GA","GA","GC","GC","GC","GC","GC","GC","GA"
+         ,"GA","GA","GC","GB","GC","GC","GA","GC","GC","GA","GC","GC","GC","GC","GC"
+         ,"GB","GA","GB","GC","GB","GA","GA","GA","GA","GB")
+mme.pca <- eigen(cov) #perform the pca using the eigen function. 
+
+eigenvectors = mme.pca$vectors #extract eigenvectors 
+pca.vectors = as.data.frame(cbind(pop, eigenvectors)) #combine with our population assignments
+df = type_convert(pca.vectors)
+
+
+pc <- df [,1:8]
+
+write.table(pc, "E:/Dropbox (OL)/Papers Avneet/11 - LH and Feleven genomics/Pilot_1/LDA/LDA_R/PC_R/PC_lg_one.txt",quote=FALSE, row.names=FALSE, col.names=FALSE, sep="\t")
