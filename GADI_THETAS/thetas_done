@@ -1,0 +1,150 @@
+#saf
+
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=800GB
+#PBS -l jobfs=750GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=24:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+
+DIR=/g/data/ht96/Avneet_UQ
+
+REGION=/g/data/ht96/Avneet_UQ/LG/LG_1.txt
+
+ANGSD=/home/564/ak2993/angsd/
+
+ANC=/g/data/ht96/Avneet_UQ/reference/SPD_CN1K_CtgRN.fasta
+
+for POP in G AG R H01 D01
+
+do
+
+    echo $POP
+    ${ANGSD}/angsd -b $DIR/$POP'_bams.txt' -anc $ANC -rf $REGION -out /g/data/ht96/Avneet_UQ/'thetas_'$POP/saf/$POP'_LG_1' \
+                   -remove_bads 1 \
+                   -minMapQ 30 -minQ 20 -doCounts 1 \
+                   -GL 2 -doSaf 1 -doMajorMinor 1 -nThreads 10 -underFlowProtect 1
+done
+
+
+
+
+#sfs
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=800GB
+#PBS -l jobfs=750GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=24:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+for POP in G AG R H01 D01
+
+do
+
+    echo $POP
+    /home/564/ak2993/angsd/misc/realSFS /g/data/ht96/Avneet_UQ/'thetas_'$POP/saf/$POP'_LG_1.saf.idx' -P 10 -maxIter 50 > /g/data/ht96/Avneet_UQ/'thetas_'$POP/sfs/$POP'_LG_1.sfs'
+done
+
+
+
+
+
+
+
+
+
+#do_thetas
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=800GB
+#PBS -l jobfs=750GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=10:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+REGION=/g/data/ht96/Avneet_UQ/LG/LG_1.txt
+
+DIR=/g/data/ht96/Avneet_UQ
+
+ANGSD=/home/564/ak2993/angsd/
+
+ANC=/g/data/ht96/Avneet_UQ/reference/SPD_CN1K_CtgRN.fasta
+
+for POP in G AG R H01 D01
+
+do
+
+    echo $POP
+     ${ANGSD}/angsd -P 10 -dosaf 1 -doThetas 1 -GL 2 -doMajorMinor 1 -underFlowProtect 1 \
+                    -anc $ANC -rf $REGION -remove_bads 1 -minMapQ 30 -minQ 20 \
+                    -b $DIR/$POP'_bams.txt' \
+                    -pest /g/data/ht96/Avneet_UQ/'thetas_'$POP/sfs/$POP'_LG_1'.sfs \
+                    -out /g/data/ht96/Avneet_UQ/'thetas_'$POP/do_thetas/$POP'_LG_1'
+done
+
+
+
+
+
+
+
+
+
+
+#estimate thetas
+
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=800GB
+#PBS -l jobfs=750GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=10:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+for POP in G AG R H01 D01
+
+do
+
+    echo $POP
+    /home/564/ak2993/angsd/misc/thetaStat do_stat /g/data/ht96/Avneet_UQ/'thetas_'$POP/do_thetas/$POP'_LG_1.thetas.idx' > /g/data/ht96/Avneet_UQ/'thetas_'$POP/estimate_thetas/$POP'_LG_1'
+done
+
+
+
+
+
+
+
+
+
+
+
+#sliding window thetas
+
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=800GB
+#PBS -l jobfs=750GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=10:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+for POP in G AG R H01 D01
+
+do
+
+    echo $POP
+    /home/564/ak2993/angsd/misc/thetaStat do_stat /g/data/ht96/Avneet_UQ/'thetas_'$POP/do_thetas/$POP'_LG_1.thetas.idx' -win 10000 -step 1000 -outnames /g/data/ht96/Avneet_UQ/'thetas_'$POP$
+done
