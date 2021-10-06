@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=01:00:00
+#PBS -l select=1:ncpus=1:mem=20GB
+#PBS -N index-test
+set -e 
+set -u 
+set -o pipefail 
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#loading the program
+module load bwa
+
+#copying the relevant files into the temporary job directory
+cp /90days/uqralls1/Reference/Senecio.contigs.fasta ${TMPDIR}
+
+#indexing the reference genome with BWA
+bwa index ${TMPDIR}/Senecio.contigs.fasta
+
+#copyin the resulting files back to the reference directory
+cp ${TMPDIR}/Senecio* /90days/uqralls1/Reference/
