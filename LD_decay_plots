@@ -1,1 +1,41 @@
-....
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=600GB
+#PBS -l jobfs=550GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=08:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+module load R/4.0.0
+
+Rscript --vanilla --slave /g/data/ht96/Avneet_UQ/ld_h01/ld_decay/fit_LDdecay.R --ld_files /g/data/ht96/Avneet_UQ/avneet_midcand/ld_decay_plots/lg_one_ldfiles.txt --max_kb_dist 200 --fit_boot 100 --fit_bin_size 1000 --fit_level 100 --plot_data --plot_scale 3 --out ld_decay_lg_one_plot.pdf
+
+
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/twenty/ngsld_lg_twenty.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/twenty/ngsld_lg_twenty.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/twenty/ngsld_lg_twenty.ld
+
+
+
+
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/one/ngsld_lg_one.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/two/ngsld_lg_two.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/three/ngsld_lg_three.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/four/ngsld_lg_four.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/five/ngsld_lg_five.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/six/ngsld_lg_six.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/seven/ngsld_lg_seven.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/eight/ngsld_lg_eight.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/nine/ngsld_lg_nine.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/ten/ngsld_lg_ten.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/eleven/ngsld_lg_eleven.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/twelve/ngsld_lg_twelve.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/thirteen/ngsld_lg_thirteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/fourteen/ngsld_lg_fourteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/fifteen/ngsld_lg_fifteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/sixteen/ngsld_lg_sixteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/seventeen/ngsld_lg_seventeen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/eighteen/ngsld_lg_eighteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/nineteen/ngsld_lg_nineteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/twenty/ngsld_lg_twenty.ld
