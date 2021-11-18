@@ -1,0 +1,17 @@
+#!/bin/bash
+#PBS -l ncpus=20
+#PBS -l mem=80GB
+#PBS -l jobfs=110GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=24:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+module load python3/3.7.4
+
+
+#this is the input file for the pca
+INPUT=/g/data/ht96/Avneet_UQ/lennox_head_pca/beagle_file/all_lg_lh.beagle.gz
+
+python3 /home/564/ak2993/pcangsd/pcangsd.py -threads 20 \
+                                            -beagle $INPUT -o /g/data/ht96/Avneet_UQ/lennox_head_pca/pcangsd/all_lg_lh
