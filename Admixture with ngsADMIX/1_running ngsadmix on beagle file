@@ -1,0 +1,13 @@
+#!/bin/bash
+#PBS -l ncpus=48
+#PBS -l mem=190GB
+#PBS -l jobfs=200GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=15:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+
+/home/564/ak2993/angsd/misc/NGSadmix -P 48 -likes /g/data/ht96/Avneet_UQ/lennox_head_pca/beagle_file/all_lg_lh.beagle.gz \
+                                     -minMaf 0.05 -K 2 -o /g/data/ht96/Avneet_UQ/lennox_head_admixture/lg_all_2_lh
