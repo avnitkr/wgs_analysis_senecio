@@ -1,0 +1,27 @@
+#!/bin/bash
+#PBS -l ncpus=20
+#PBS -l mem=100GB
+#PBS -l jobfs=110GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=30:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+#setting the job population bam paths list
+BAMS=/g/data/ht96/Avneet_UQ/lennox_head/bam_paths/lennox_head_bam_paths.txt
+
+#setting the target regions
+REGIONS=/g/data/ht96/Avneet_UQ/linkage_groups/sorted_all.txt
+
+#setting the reference genome
+REF=/g/data/ht96/Avneet_UQ/reference/SPD_CN1K_CtgRN.fasta
+
+#setting the path to angsd
+ANGSD=/home/564/ak2993/angsd/
+
+$ANGSD/angsd -P 20 \
+             -doMaf 1 -dosaf 1 -GL 2 -doGlf 2 -doMajorMinor 1 -doCounts 1 \
+             -anc $REF -remove_bads 1 -minMapQ 30 -minQ 20 -skipTriallelic 1 \
+             -b $BAMS \
+             -rf $REGIONS -out /g/data/ht96/Avneet_UQ/lennox_head_pca/beagle_file/all_lg_lh
