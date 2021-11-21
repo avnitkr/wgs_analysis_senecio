@@ -25,10 +25,6 @@ pop <- c("D01","D01","D01","D01","D01","D01","D01","D01","D01","D01","D01","D01"
 		 ,"G","G","G","G","G","G","G","G","G","G")
 
 
-pop <- c("JIGA","JIGA","JIGA","JIGA","JIGA","JIGA","JIGA","JIGA","JIGA","JIGA","JIGA","JIGA","JIGA","JIGA","JIGA"
-         ,"PANY","PANY","PANY","PANY","PANY","PANY","PANY","PANY","PANY","PANY","PANY","PANY","PANY","PANY","PANY"
-         ,"MBNS","MBNS","MBNS","MBNS","MBNS","MBNS","MBNS","MBNS","MBNS","MBNS","MBNS","MBNS","MBNS","MBNS","MBNS"
-         ,"MAQU","MAQU","MAQU","MAQU","MAQU","MAQU","MAQU","MAQU","MAQU","MAQU","MAQU","MAQU","MAQU","MAQU","MAQU")
 
 admix.id = as.data.frame(cbind(pop, admix))
 names(admix.id) = c("pop","q1","q2")
