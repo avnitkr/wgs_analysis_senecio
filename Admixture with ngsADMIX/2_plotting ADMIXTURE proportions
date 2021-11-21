@@ -29,7 +29,7 @@ pop <- c("D01","D01","D01","D01","D01","D01","D01","D01","D01","D01","D01","D01"
 admix.id = as.data.frame(cbind(pop, admix))
 names(admix.id) = c("pop","q1","q2")
 
-pdf("/g/data/ht96/Avneet_UQ/avneet_midcand/admix_h_d_r_K2_plot.pdf")
+pdf("/g/data/ht96/Avneet_UQ/avneet_midcand/admix_h_d_r/admix_h_d_r_K2_plot.pdf")
 plot = barplot(t(as.matrix(subset(admix.id, select=q1:q2))), col=c("firebrick","royalblue"), border=NA)
 
 library(tidyverse) #load the tidyverse package for formatting and plotting
