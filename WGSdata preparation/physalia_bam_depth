@@ -1,0 +1,20 @@
+#PBS -l ncpus=10
+#PBS -l mem=600GB
+#PBS -l jobfs=550GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=48:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+module load samtools/1.10
+
+
+BAMLIST=/g/data/ht96/Avneet_UQ/avneet_midcand/coverage/depth_samtools/LH/D01/sample_list/bam_list.txt
+
+
+for SAMPLEBAM in `cat $BAMLIST`; do
+    ## Count per position depth per sample
+    samtools depth -aa '/g/data/ht96/Avneet_UQ/lennox_head/realigned_bams/dunes/D01/'$SAMPLEBAM'_rln.mdup.cln.bam' | cut -f 3 | gzip > '/g/data/ht96/Avneet_UQ/avneet_midcand/coverage/depth_samtools/LH/D01/'$SAMPLEBAM'_depth.gz'
+
+done
