@@ -1,0 +1,599 @@
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/twenty/ngsld_lg_twenty.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/twenty/ngsld_lg_twenty.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/twenty/ngsld_lg_twenty.ld
+
+
+
+
+
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=600GB
+#PBS -l jobfs=550GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=08:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+module load R/4.0.0
+
+Rscript --vanilla --slave /g/data/ht96/Avneet_UQ/ld_h01/ld_decay/fit_LDdecay.R --ld_files /g/data/ht96/Avneet_UQ/avneet_midcand/ld_decay_plots/lg_one_ldfiles.txt --max_kb_dist 200 --fit_boot 100 --fit_bin_size 1000 --fit_level 100 --plot_data --plot_scale 3 --out ld_decay_lg_one_plot.pdf
+
+
+
+
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/one/ngsld_lg_one.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/two/ngsld_lg_two.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/three/ngsld_lg_three.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/four/ngsld_lg_four.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/five/ngsld_lg_five.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/six/ngsld_lg_six.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/seven/ngsld_lg_seven.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/eight/ngsld_lg_eight.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/nine/ngsld_lg_nine.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/ten/ngsld_lg_ten.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/eleven/ngsld_lg_eleven.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/twelve/ngsld_lg_twelve.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/thirteen/ngsld_lg_thirteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/fourteen/ngsld_lg_fourteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/fifteen/ngsld_lg_fifteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/sixteen/ngsld_lg_sixteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/seventeen/ngsld_lg_seventeen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/eighteen/ngsld_lg_eighteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/nineteen/ngsld_lg_nineteen.ld
+/g/data/ht96/Avneet_UQ/ld_recombinant_pop/ngsld/twenty/ngsld_lg_twenty.ld
+
+
+
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/one/ngsld_lg_one.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/two/ngsld_lg_two.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/three/ngsld_lg_three.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/four/ngsld_lg_four.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/five/ngsld_lg_five.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/six/ngsld_lg_six.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/seven/ngsld_lg_seven.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/eight/ngsld_lg_eight.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/nine/ngsld_lg_nine.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/ten/ngsld_lg_ten.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/eleven/ngsld_lg_eleven.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/twelve/ngsld_lg_twelve.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/thirteen/ngsld_lg_thirteen.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/fourteen/ngsld_lg_fourteen.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/fifteen/ngsld_lg_fifteen.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/sixteen/ngsld_lg_sixteen.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/seventeen/ngsld_lg_seventeen.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/eighteen/ngsld_lg_eighteen.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/nineteen/ngsld_lg_nineteen.ld
+/g/data/ht96/Avneet_UQ/ld_d01/ngsld/twenty/ngsld_lg_twenty.ld
+
+
+
+
+
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/one/ngsld_lg_one.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/two/ngsld_lg_two.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/three/ngsld_lg_three.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/four/ngsld_lg_four.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/five/ngsld_lg_five.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/six/ngsld_lg_six.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/seven/ngsld_lg_seven.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/eight/ngsld_lg_eight.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/nine/ngsld_lg_nine.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/ten/ngsld_lg_ten.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/eleven/ngsld_lg_eleven.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/twelve/ngsld_lg_twelve.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/thirteen/ngsld_lg_thirteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/fourteen/ngsld_lg_fourteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/fifteen/ngsld_lg_fifteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/sixteen/ngsld_lg_sixteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/seventeen/ngsld_lg_seventeen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/eighteen/ngsld_lg_eighteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/nineteen/ngsld_lg_nineteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/twenty/ngsld_lg_twenty.ld
+
+
+
+
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/one/ngsld_lg_one.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/two/ngsld_lg_two.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/three/ngsld_lg_three.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/four/ngsld_lg_four.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/five/ngsld_lg_five.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/six/ngsld_lg_six.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/seven/ngsld_lg_seven.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/eight/ngsld_lg_eight.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/nine/ngsld_lg_nine.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/ten/ngsld_lg_ten.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/eleven/ngsld_lg_eleven.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/twelve/ngsld_lg_twelve.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/thirteen/ngsld_lg_thirteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/fourteen/ngsld_lg_fourteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/fifteen/ngsld_lg_fifteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/sixteen/ngsld_lg_sixteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/seventeen/ngsld_lg_seventeen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/eighteen/ngsld_lg_eighteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/nineteen/ngsld_lg_nineteen.ld
+/g/data/ht96/Avneet_UQ/ld_h01/ngsld/twenty/ngsld_lg_twenty.ld
+
+
+
+
+
+module load R/4.0.0
+R
+library(tidyverse)
+library(ggplot2)
+cov <- as.matrix(read.table("/g/data/ht96/Avneet_UQ/avneet_midcand/pca_h_d_r/all_lg_h_d_r.cov", header = F))
+
+
+
+#We will also add a column with population assingments
+
+
+pop <- c("D01261","D01230","D01252","D01219","D01205","D01220","D01265","D01273","D01259","D01236","D01251","D01203","D01225","D01213","D01218"
+         ,"D01256","D01231","D01250","D01243","D01255","D01223","D01262","D01233","D01242","D01215","D01241","D01228","D01224"
+         ,"D01254","D01247","D01226","D01238","D01240"
+	       ,"H01249","H01280"                                                                   
+	       ,"H01219","H01259","H01243","H01207","H01255","H01201","H01234","H01286","H01233","H01257","H01244","H01248","H01238","H01250"
+         ,"H01281","H01265","H01287","H01276","H01262","H01247","H01245","H01231","H01288","H01289","H01297","H01212","H01277","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG"
+         ,"AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG"
+         ,"AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG"
+         ,"AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG","AG"
+		 ,"AG","AG"                                                                   
+		 ,"G","G","G","G","G","G","G","G","G","G","G","G","G","G"
+         ,"G","G","G","G","G","G","G","G","G","G","G","G","G","G","G"
+         ,"G","G","G","G","G","G","G","G","G","G","G","G","G","G","G"
+         ,"G","G","G","G","G","G","G","G","G","G","G","G","G","G","G"
+		 ,"G","G","G","G","G","G","G","G","G","G")
+	 
+mme.pca <- eigen(cov) #perform the pca using the eigen function. 
+
+eigenvectors = mme.pca$vectors #extract eigenvectors 
+pca.vectors = as.data.frame(cbind(pop, eigenvectors)) #combine with our population assignments
+df = type_convert(pca.vectors)
+
+pca.eigenval.sum = sum(mme.pca$values) #sum of eigenvalues
+varPC1 <- (mme.pca$values[1]/pca.eigenval.sum)*100 #Variance explained by PC1
+varPC1 <- round(varPC1,digits=2)
+varPC2 <- (mme.pca$values[2]/pca.eigenval.sum)*100 #Variance explained by PC2
+varPC2 <- round(varPC2,digits=2)
+varPC3 <- (mme.pca$values[3]/pca.eigenval.sum)*100 #Variance explained by PC3
+varPC3 <- round(varPC3,digits=2)
+
+
+#plot PC1 vs PC2 using ggplot
+pca = ggplot(data = df, aes(x=V2, y=V3, fill = pop, colour = pop)) +
+  geom_point(size = 3, shape = 21) +
+  xlab(paste("Principal component 1 (" , varPC1, ")")) +
+  ylab(paste("Principal component 2 (" , varPC2, ")"))
+pca <- pca + theme_light() 
+
+ggsave(filename = "/g/data/ht96/Avneet_UQ/avneet_midcand/pca_h_d_r/lg_all_pca12_plot.png", plot = pca)
+
+pca_a = ggplot(data = df, aes(x=V2, y=V4, fill = pop, colour = pop)) +
+  geom_point(size = 3, shape = 21) +
+  xlab(paste("Principal component 1 (" , varPC1, ")")) +
+  ylab(paste("Principal component 3 (" , varPC3, ")"))
+pca_a <- pca_a + theme_light()
+
+ggsave(filename = "/g/data/ht96/Avneet_UQ/avneet_midcand/pca_h_d_r/lg_all_pca13_plot.png", plot = pca_a)
+
+pca_b = ggplot(data = df, aes(x=V3, y=V4, fill = pop, colour = pop)) +
+  geom_point(size = 3, shape = 21) +
+  xlab(paste("Principal component 2 (" , varPC2, ")")) +
+  ylab(paste("Principal component 3 (" , varPC3, ")"))
+pca_b <- pca_b + theme_light()
+
+ggsave(filename = "/g/data/ht96/Avneet_UQ/avneet_midcand/pca_h_d_r/lg_all_pca23_plot.png", plot = pca_b)
+
+
+
+
+
+#PBS -l ncpus=10
+#PBS -l mem=600GB
+#PBS -l jobfs=550GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=20:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+module load python3/3.7.4
+
+
+#this is the input file for the pca
+INPUT=/g/data/ht96/Avneet_UQ/avneet_midcand/pca_h_d_r/all_lg_h_d_r.beagle.gz
+
+python3 /home/564/ak2993/pcangsd/pcangsd.py -threads 10 \
+                                            -beagle $INPUT -o /g/data/ht96/Avneet_UQ/avneet_midcand/pca_h_d_r/all_lg_h_d_r
+											
+											
+											
+											
+
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=600GB
+#PBS -l jobfs=550GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=20:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+/home/564/ak2993/angsd/misc/NGSadmix -P 10 -likes /g/data/ht96/Avneet_UQ/avneet_midcand/pca_h_d_r/all_lg_h_d_r.beagle.gz \
+                                     -minMaf 0.05 -K 2 -o /g/data/ht96/Avneet_UQ/avneet_midcand/admix_h_d_r/all_lg_h_d_r
+                                     
+                                     
+                                     
+                                     
+library(tidyverse)
+
+basedir <- "~/day1/" # Make sure to edit this to match your $BASEDIR
+bam_list <- read_lines(paste0(basedir, "/merged_bam_list.txt"))
+
+for (i in 1:length(bam_list)){
+  bamfile = bam_list[i]
+  # Compute depth stats
+  depth <- read_tsv(paste0(basedir, "/", bamfile, "_bt2_mme_physalia_testdata_chr24_minq20_sorted_dedup_overlapclipped.bam.depth.gz"), col_names = F)$X1
+  mean_depth <- mean(depth)
+  sd_depth <- sd(depth)
+  mean_depth_nonzero <- mean(depth[depth > 0])
+  mean_depth_within2sd <- mean(depth[depth < mean_depth + 2 * sd_depth])
+  median <- median(depth)
+  presence <- as.logical(depth)
+  proportion_of_reference_covered <- mean(presence)
+  output_temp <- tibble(bamfile, mean_depth, sd_depth, mean_depth_nonzero, mean_depth_within2sd, median, proportion_of_reference_covered)
+
+  # Bind stats into dataframe and store sample-specific per base depth and presence data
+  if (i==1){
+    output <- output_temp
+    total_depth <- depth
+    total_presence <- presence
+  } else {
+    output <- bind_rows(output, output_temp)
+    total_depth <- total_depth + depth
+    total_presence <- total_presence + presence
+  }
+}
+
+output %>%
+  mutate(across(where(is.numeric), round, 3))
+
+# Plot the depth distribution (this may take a few minutes to run)
+tibble(total_depth = total_depth, position = 1:length(total_depth))  %>%
+  ggplot(aes(x = position, y = total_depth)) +
+  geom_point(size = 0.1)
+
+# Total depth per site across all individuals 
+total_depth_summary <- count(tibble(total_depth = total_depth), total_depth)
+total_presence_summary <- count(tibble(total_presence = total_presence), total_presence)
+total_depth_summary %>%
+  ggplot(aes(x = total_depth, y = n)) +
+  geom_point()
+total_depth_summary %>%
+  ggplot(aes(x = total_depth, y = n)) +
+  geom_point() +
+  coord_cartesian(xlim=c(NA, 20))
+total_presence_summary %>%
+  ggplot(aes(x = total_presence, y = n)) +
+  geom_col()
+  
+  
+  
+  
+  
+  
+D01225
+D01213
+D01218
+D01256
+D01231
+D01250
+D01243
+D01255
+D01223
+D01262
+D01233
+D01242
+D01215
+D01241
+D01228
+D01224
+D01254
+D01247
+D01226
+D01238
+D01240
+
+save above file as bam_list.txt
+
+
+#PBS -l ncpus=10
+#PBS -l mem=600GB
+#PBS -l jobfs=550GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=48:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+ 
+ 
+module load samtools/1.10
+
+$BASEDIR=/g/data/ht96/Avneet_UQ/avneet_midcand/coverage/depth_samtools/LH/D01
+BAMLIST=$BASEDIR/sample_list/bam_list.txt
+
+
+for SAMPLEBAM in `cat $BAMLIST`; do 
+    ## Count per position depth per sample
+    samtools depth -aa '/g/data/ht96/Avneet_UQ/lennox_head/realigned_bams/dunes/D01/'$SAMPLEBAM'_rln.mdup.cln.bam' | cut -f 3 | gzip > $BASEDIR'/'$SAMPLEBAM'_depth.gz'
+
+done
+ 
+
+
+
+
+H01249
+H01280
+H01219
+H01259
+H01243
+H01207
+H01255
+H01201
+H01234
+H01286
+H01233
+H01257
+H01244
+H01248
+H01238
+H01250
+H01281
+H01265
+H01287
+H01276
+H01262
+H01247
+H01245
+H01231
+H01288
+H01289
+H01297
+H01212
+H01277
+
+
+
+#PBS -l ncpus=10
+#PBS -l mem=600GB
+#PBS -l jobfs=550GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=48:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+module load samtools/1.10
+
+
+BAMLIST=/g/data/ht96/Avneet_UQ/avneet_midcand/coverage/depth_samtools/LH/H01/sample_list/bam_list.txt
+
+
+for SAMPLEBAM in `cat $BAMLIST`; do
+    ## Count per position depth per sample
+    samtools depth -aa '/g/data/ht96/Avneet_UQ/lennox_head/realigned_bams/headlands/H01/'$SAMPLEBAM'_rln.mdup.cln.bam' | cut -f 3 | gzip > '/g/data/ht96/Avneet_UQ/avneet_midcand/coverage/depth_samtools/LH/H01/'$SAMPLEBAM'_depth.gz'
+
+done
+
+
+
+#!/bin/bash
+#PBS -l ncpus=20
+#PBS -l mem=80GB
+#PBS -l jobfs=110GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=5:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+#setting the job population bam paths list
+BAMS=/g/data/ht96/Avneet_UQ/D01_bams.txt
+
+#setting the target regions
+REGIONS=/g/data/ht96/Avneet_UQ/linkage_groups/lg_one.txt
+
+#setting the reference genome
+REF=/g/data/ht96/Avneet_UQ/reference/SPD_CN1K_CtgRN.fasta
+
+#setting the path to angsd
+ANGSD=/home/564/ak2993/angsd/
+
+MIN_MAF=0.10 #filter : will keep SNP above this allele frequency (over all individuals)
+PERCENT_IND=0.75 #filter : will keep SNP with at least one read for this percentage of individuals
+MAX_DEPTH_FACTOR=3 #filter : will keep SNP with less than X time the no of individuals total coverage
+
+N_IND=$(wc -l $BAMS | cut -d " " -f 1)
+MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
+MIN_IND=${MIN_IND_FLOAT%.*}
+MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
+
+$ANGSD/angsd -P 20 \
+             -dosaf 1 -GL 2 -doGlf 2 -doMaf 1 -doMajorMinor 1 -doCounts 1 \
+             -anc $REF -rf $REGIONS \
+             -remove_bads 1 -minMapQ 30 -minQ 20 -minInd $MIN_IND -setMaxDepth $MAX_DEPTH -minMaf $MIN_MAF \
+             -b $BAMS -out /g/data/ht96/Avneet_UQ/avneet_midcand/ld_d01/beagle/lg_one
+             
+ #!/bin/bash
+#PBS -l ncpus=15
+#PBS -l mem=90GB
+#PBS -l jobfs=110GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=5:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+NGSLD=/home/564/ak2993/ngsLD/
+
+#run ngsLD
+$NGSLD/ngsLD --geno /g/data/ht96/Avneet_UQ/avneet_midcand/ld_d01/beagle/lg_twenty.beagle.gz --probs --n_ind 33 --n_sites 15436 \
+             --pos /g/data/ht96/Avneet_UQ/avneet_midcand/ld_d01/beagle/sites_lg_twenty \
+             --n_threads 15 --max_kb_dist 0 --max_snp_dist 0 --outH /g/data/ht96/Avneet_UQ/avneet_midcand/ld_d01/ngsld/ngsld_lg_twenty.ld --extend_out
+             
+             
+             
+library(tidyverse)
+
+basedir <- "~/day1/" # Make sure to edit this to match your $BASEDIR
+bam_list <- read_lines(paste0(basedir, "/merged_bam_list.txt"))
+
+for (i in 1:length(bam_list)){
+  bamfile = bam_list[i]
+  # Compute depth stats
+  depth <- read_tsv(paste0(basedir, "/", bamfile, "_bt2_mme_physalia_testdata_chr24_minq20_sorted_dedup_overlapclipped.bam.depth.gz"), col_names = F)$X1
+  mean_depth <- mean(depth)
+  sd_depth <- sd(depth)
+  mean_depth_nonzero <- mean(depth[depth > 0])
+  mean_depth_within2sd <- mean(depth[depth < mean_depth + 2 * sd_depth])
+  median <- median(depth)
+  presence <- as.logical(depth)
+  proportion_of_reference_covered <- mean(presence)
+  output_temp <- tibble(bamfile, mean_depth, sd_depth, mean_depth_nonzero, mean_depth_within2sd, median, proportion_of_reference_covered)
+
+  # Bind stats into dataframe and store sample-specific per base depth and presence data
+  if (i==1){
+    output <- output_temp
+    total_depth <- depth
+    total_presence <- presence
+  } else {
+    output <- bind_rows(output, output_temp)
+    total_depth <- total_depth + depth
+    total_presence <- total_presence + presence
+  }
+}
+
+output %>%
+  mutate(across(where(is.numeric), round, 3))
+
+# Plot the depth distribution (this may take a few minutes to run)
+tibble(total_depth = total_depth, position = 1:length(total_depth))  %>%
+  ggplot(aes(x = position, y = total_depth)) +
+  geom_point(size = 0.1)
+
+# Total depth per site across all individuals 
+total_depth_summary <- count(tibble(total_depth = total_depth), total_depth)
+total_presence_summary <- count(tibble(total_presence = total_presence), total_presence)
+total_depth_summary %>%
+  ggplot(aes(x = total_depth, y = n)) +
+  geom_point()
+total_depth_summary %>%
+  ggplot(aes(x = total_depth, y = n)) +
+  geom_point() +
+  coord_cartesian(xlim=c(NA, 20))
+total_presence_summary %>%
+  ggplot(aes(x = total_presence, y = n)) +
+  geom_col()
+  
+  
+  
+  
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=600GB
+#PBS -l jobfs=550GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=08:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+
+DIR=/g/data/ht96/Avneet_UQ/robin/bam_paths
+
+ANGSD=/home/564/ak2993/angsd/
+
+ANC=/g/data/ht96/Avneet_UQ/robin/reference/Senecio.contigs.fasta
+
+REGIONS=/g/data/ht96/Avneet_UQ/robin_contigs/contigs/parallel_contigs.txt
+#doSaf because we don't want to filter on maf for thetas calculation
+#only T watterson and Taj D are interpretable if anc is the ref genome
+
+for POP in G AG H01 D01 H02 D03 H05 D04
+
+do
+
+    echo $POP
+    ${ANGSD}/angsd -b $DIR/$POP'_bams.txt' -anc $ANC -rf $REGIONS -out /g/data/ht96/Avneet_UQ/robin_contigs/'thetas_'$POP/saf/$POP'_CONTIGS_PARALLEL' \
+                   -remove_bads 1 \
+                   -minMapQ 30 -minQ 20 -doCounts 1 \
+                   -GL 2 -doSaf 1 -doMajorMinor 1 -nThreads 10 -underFlowProtect 1
+done
+
+
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=04:08:00
+#PBS -l select=1:ncpus=10:mem=30GB
+#PBS -N align-stat-array
+#PBS -J 1-80
+
+#changing to the temporary job directory
+cd ${TMPDIR}
+
+#loading the programs
+module load samtools
+
+#setting the sample list
+SAMPLELIST=/QRISdata/Q0969/Eighty-Genomes-Project/merged-bam/inds.txt
+
+#setting the sample from the job array
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#copying the necessary files to the temporary job directory
+cp /QRISdata/Q0969/Eighty-Genomes-Project/merged-bam/${SAMPLE}-merged.bam ${TMPDIR}
+
+#running samtools flagstat
+samtools flagstat ${TMPDIR}/${SAMPLE}-merged.bam &> ${TMPDIR}/${SAMPLE}_stats.txt
+
+#copying the stats file from the job temporary directory back to the results directory
+cp ${TMPDIR}/${SAMPLE}_stats.txt /QRISdata/Q0969/Eighty-Genomes-Project/merged-bam/stats/
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+ 
+
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
