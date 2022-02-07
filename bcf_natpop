@@ -1,0 +1,39 @@
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=600GB
+#PBS -l jobfs=550GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=27:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+#setting the list of full paths to bam files
+#ensure .bai index files are in the same directory as the corresponding .bam
+BAMS=/g/data/ht96/Avneet_UQ/robin/bam_paths/natpop.txt
+
+
+#setting name and location of output files
+OUTFILE=/g/data/ht96/Avneet_UQ/vcf_natpops/vcf_natpop
+
+#setting the location of ANGSD 
+ANGSD=/home/564/ak2993/angsd/
+
+
+
+#calling variable sites across all bams
+        #GL 1: calculates genotype likelihood with the samtools method
+        #doMaf 2: assumes fixed major allele inferred from genotype likelihoods (GLs), unknown minor (sums GLs of alleles to pick)
+        #SNP_pval 1e-6: keeps only sites with a p-value less than 1e-6 (for being variable)
+        #doMajorMinor 1: uses a maximum likelihood approach to choose major and minor alleles
+${ANGSD}/angsd -bam ${BAMS} \
+               -remove_bads 1 \
+               -minMapQ 30 -minQ 20 -doCounts 1 \
+			   -dobcf 1 \
+               -gl 1 \
+			   -dogeno 1 \
+               -out ${OUTFILE} \
+               -domaf 1 \
+			   -doPost 1 \
+               -SNP_pval 1e-6 \
+               -doMajorMinor 1 \
+               -nThreads 10
