@@ -1,0 +1,1 @@
+gunzip -c R_LG_13.mafs.gz | cut -f -2 | awk '{if(NR>1)print}' > sites_R_LG_13
