@@ -1,0 +1,32 @@
+#!/bin/bash
+#PBS -l ncpus=5
+#PBS -l mem=100GB
+#PBS -l jobfs=100GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=24:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+
+NGSLD=/home/564/ak2993/ngsLD/
+DIR=/g/data/ht96/Avneet_UQ
+
+
+
+for POP in G AG R H01 D01 
+
+do
+
+  echo $POP
+	N_IND=$(wc -l $DIR/$POP'_bams.txt' | cut -d " " -f 1)
+	POS_FILE=/g/data/ht96/Avneet_UQ/manuscript/ld/'ld_'$POP/beagle/'sites_'$POP'_LG_1'
+	N_SITES=$(wc -l $POS_FILE | cut -d " " -f 1)
+    
+
+   
+    $NGSLD/ngsLD --geno /g/data/ht96/Avneet_UQ/manuscript/ld/'ld_'$POP/beagle/$POP'_LG_1'.beagle.gz --probs --n_ind $N_IND --n_sites $N_SITES \
+             --pos $POS_FILE \
+             --n_threads 5 --max_kb_dist 0 --max_snp_dist 0 --outH  /g/data/ht96/Avneet_UQ/manuscript/ld/'ld_'$POP/ngsld/$POP'_LG_1.ld' --extend_out
+			 
+done
