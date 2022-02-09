@@ -1,0 +1,23 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=48:00:00
+#PBS -l select=1:ncpus=24:mem=120GB
+#PBS -N assoc
+
+cd $PBS_O_WORKDIR
+
+#setting quantitative phenotype file
+PHENO=/QRISdata/Q0969/genetic_architecture/feleven_pheno.txt
+
+#setting the job population bam paths list
+BAMS=/QRISdata/Q0969/genetic_architecture/combinedpaths.txt
+
+#setting the target regions (format is contig:start-end)
+REGIONS=/QRISdata/Q0969/genetic_architecture/linkage_groups/twenty_lg.txt
+
+#loading ANGSD
+ANGSD=/home/uqakaur3/thetas/angsd/
+
+$ANGSD/angsd -P 24 -rf ${REGIONS} -yQuant $PHENO \
+             -doAsso 4 -GL 2 -doPost 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+             -b $BAMS -out all_lg_quant_EM_gwas
