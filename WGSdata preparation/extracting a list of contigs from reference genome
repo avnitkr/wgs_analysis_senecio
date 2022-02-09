@@ -1,0 +1,10 @@
+grep "tig0" Senecio.contigs.fasta > CONTIGS.txt
+ head CONTIGS.txt
+ awk '{print $1}' CONTIGS.txt > CONTIG.txt
+ head CONTIG.txt
+ sed 's/^.//' CONTIG.txt > tiglist.txt #removes the first character
+ head tiglist.txt
+ wc -l tiglist.txt
+ sed '1,3049! d' tiglist.txt > LIST1.txt #extracting a range of lines from a text file
+ 
+ grep "chr2" contigandchr.txt > chr2.txt
