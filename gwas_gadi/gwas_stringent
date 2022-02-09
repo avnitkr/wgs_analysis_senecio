@@ -1,0 +1,31 @@
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=10:00:00
+#PBS -l select=1:ncpus=20:mem=60GB
+#PBS -N assoc
+
+cd $PBS_O_WORKDIR
+
+#setting quantitative phenotype file
+PHENO=/QRISdata/Q0969/genetic_architecture/feleven_pheno.txt
+
+#setting the job population bam paths list
+BAMS=/QRISdata/Q0969/genetic_architecture/combinedpaths.txt
+
+#setting the target regions (format is contig:start-end)
+REGIONS=/QRISdata/Q0969/genetic_architecture/linkage_groups/twenty_lg.txt
+
+#loading ANGSD
+ANGSD=/home/uqakaur3/thetas/angsd/
+
+MIN_MAF=0.05
+PERCENT_IND=0.5
+MAX_DEPTH_FACTOR=4
+N_IND=$(wc -l $BAMS | cut -d " " -f 1)
+MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
+MIN_IND=${MIN_IND_FLOAT%.*}
+MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
+
+$ANGSD/angsd -P 20 -rf $REGIONS -yQuant $PHENO \
+             -doAsso 4 -GL 2 -doPost 1 -doMajorMinor 1 -doMaf 1 -doCounts 1 \
+             -remove_bads 1 -minMapQ 30 -minQ 20 -b $BAMS -minInd $MIN_IND -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH -out all_lg_quant_EM_gwas_depth_filters
