@@ -1,0 +1,46 @@
+rm(list=ls())
+
+attach(gwas_f11_lh)
+af<-gwas_f11_lh[,c(5,8,12,16)]
+
+#estimate the sample covariance matrix
+Vmatrix <- cor(af)
+library(tidyverse)
+
+#Load the covariance matrix
+cov <- Vmatrix
+
+#perform the pca using the eigen function
+mme.pca <- eigen(cov)
+
+#R generates loadings in reverse so I have to multiply by -1 (this helps make the R plot same as JMP)
+#First, create a matrix with same dimensions as loadings matrix
+minus.one.mat <- matrix(c(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1),ncol=4,nrow = 4)
+#Then multiply with `mme.pca` (or the raw loadings matrix)
+mme_loadings_reversed<-mme.pca.loadings*minus.one.mat
+
+#We will also add a column with population assingments
+pop <-c("G","AG","H01","D01")
+
+
+#extract eigenvectors
+#eigenvectors = mme.pca$vectors
+
+#combine with our population assignments
+pca.vectors = as.data.frame(cbind(pop, mme_loadings_reversed)) 
+df = type_convert(pca.vectors)
+pca.eigenval.sum = sum(mme.pca$values) #sum of eigenvalues
+varPC1 <- (mme.pca$values[1]/pca.eigenval.sum)*100 #Variance explained by PC1
+varPC1 <- round(varPC1,digits=2)
+varPC2 <- (mme.pca$values[2]/pca.eigenval.sum)*100 #Variance explained by PC2
+varPC2 <- round(varPC2,digits=2)
+varPC3 <- (mme.pca$values[3]/pca.eigenval.sum)*100 #Variance explained by PC3
+varPC3 <- round(varPC3,digits=2)
+pca = ggplot(data = df, aes(x=V2, y=V3, fill = pop, colour = pop)) +  geom_point(size = 3, shape = 21) + 
+  xlab(paste("Principal component 1 (" , varPC1, ")")) + 
+  ylab(paste("Principal component 2 (" , varPC2, ")"))
+ pca <- pca + theme_light()+xlim(-1,1)+ylim(-1,1)
+pca
+
+pca
+
