@@ -1,0 +1,2 @@
+allelefreq_low_assoc_sites<-gwas_f11_lh[,c(5,8,12,16)]
+SIG<-gwas_f11_lh[gwas_f11_lh$LRT > 17,]
