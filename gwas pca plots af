@@ -12,6 +12,7 @@ cov <- Vmatrix
 
 #perform the pca using the eigen function
 mme.pca <- eigen(cov)
+mme.pca.loadings <- mme.pca$vectors
 
 #R generates loadings in reverse so I have to multiply by -1 (this helps make the R plot same as JMP)
 #First, create a matrix with same dimensions as loadings matrix
