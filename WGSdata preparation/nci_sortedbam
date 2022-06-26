@@ -1,0 +1,22 @@
+#PBS -l ncpus=12
+#PBS -l mem=50GB
+#PBS -l jobfs=70GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=08:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+#PBS -r y
+#PBS -J 1-10
+
+#loading the programs
+module load bwa/0.7.17
+module load samtools/1.9
+
+#setting the sample list
+SAMPLELIST=/g/data/ht96/wgsdata/dunes/D00/D00_inds.txt
+
+#setting the sample from the job array
+SAMPLE=$(cat ${SAMPLELIST} | tail -n +${PBS_ARRAY_INDEX} | head -1)
+
+#aligning and adding read groups with BWA, sorting the bam file with Samtools
+bwa mem -t 12 -M -R "@RG\tSM:${SAMPLE}\tID:${SAMPLE}\tLB:${SAMPLE}\tPL:ILLUMINA\tPU:${SAMPLE}" /g/data/ht96/Avneet_UQ/manuscript/reference/SPD_CN1K_CtgRN.fasta /g/data/ht96/wgsdata/dunes/D00/${SAMPLE}_1.fq.gz /g/data/ht96/wgsdata/dunes/D00/${SAMPLE}_2.fq.gz | samtools sort -@ 12 -T ${SAMPLE} -o /g/data/ht96/Avneet_UQ/chapter_two/sorted_bams/dunes/D00/${SAMPLE}_sorted.bam -
