@@ -18,3 +18,8 @@ cp /QRISdata/Q0969/recombinantpop_kaur/realign_indels/Gravitropic/${SAMPLE}_rln.
 samtools index ${TMPDIR}/${SAMPLE}_rln.mdup.cln.bam
 
 cp ${TMPDIR}/${SAMPLE}_rln.mdup.cln.bam.bai /QRISdata/Q0969/recombinantpop_kaur/realign_indels/Gravitropic/
+
+
+
+
+#make sure to run this on tinaroo
