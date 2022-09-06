@@ -1,0 +1,11 @@
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=100GB
+#PBS -l jobfs=100GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=5:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+/home/564/ak2993/angsd/misc/realSFS -P 10 /g/data/ht96/Avneet_UQ/manuscript/fst/redo_saf/H01_LG_1.saf.idx /g/data/ht96/Avneet_UQ/manuscript/fst/redo_saf/D01_LG_1.saf.idx  > /g/data/ht96/Avneet_UQ/manuscript/fst/two_d_sfs/LG_1_H01.D01.sfs
