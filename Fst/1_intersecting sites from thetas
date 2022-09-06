@@ -8,3 +8,7 @@
 #PBS -l storage=scratch/ht96+gdata/ht96
 
 /home/564/ak2993/angsd/misc/realSFS print /g/data/ht96/Avneet_UQ/manuscript/thetas/thetas_H01/saf/H01_LG_1.saf.idx /g/data/ht96/Avneet_UQ/manuscript/thetas/thetas_D01/saf/D01_LG_1.saf.idx | cut -f 1-2 > /g/data/ht96/Avneet_UQ/manuscript/fst/intersect/intersect_LG_1.txt
+
+
+
+#make sure to index the resulting intersecting files 
