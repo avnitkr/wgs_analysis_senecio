@@ -1,0 +1,10 @@
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=100GB
+#PBS -l jobfs=100GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=8:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+/home/564/ak2993/angsd/misc/realSFS print /g/data/ht96/Avneet_UQ/manuscript/thetas/thetas_H01/saf/H01_LG_1.saf.idx /g/data/ht96/Avneet_UQ/manuscript/thetas/thetas_D01/saf/D01_LG_1.saf.idx | cut -f 1-2 > /g/data/ht96/Avneet_UQ/manuscript/fst/intersect/intersect_LG_1.txt
