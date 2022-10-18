@@ -1,0 +1,11 @@
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=100GB
+#PBS -l jobfs=100GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=24:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+/home/564/ak2993/ngsRelate/ngsRelate -g /g/data/ht96/Avneet_UQ/manuscript/gwas_cov/ngsrelate/r_all_lg.glf.gz -n 131 -f /g/data/ht96/Avneet_UQ/manuscript/gwas_cov/ngsrelate/freq -O /g/data/ht96/Avneet_UQ/manuscript/gwas_cov/ngsrelate/newres
