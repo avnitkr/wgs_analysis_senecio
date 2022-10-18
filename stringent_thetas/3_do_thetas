@@ -1,0 +1,35 @@
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=100GB
+#PBS -l jobfs=110GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=5:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+REGION=/g/data/ht96/Avneet_UQ/manuscript/LG/LG_one.txt
+
+DIR=/g/data/ht96/Avneet_UQ/manuscript/bam_paths
+
+ANGSD=/home/564/ak2993/angsd/
+
+ANC=/g/data/ht96/Avneet_UQ/reference/SPD_CN1K_CtgRN.fasta
+
+for POP in G AG R H01 D01
+
+do
+
+    echo $POP
+    PERCENT_IND=0.5 #filter : will keep SNP with at least one read for this percentage of individuals
+    MIN_DEPTH=1
+    N_IND=$(wc -l $DIR/$POP'_bams.txt' | cut -d " " -f 1)
+    MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
+    MIN_IND=${MIN_IND_FLOAT%.*}
+    MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
+    ${ANGSD}/angsd -P 10 -dosaf 1 -doThetas 1 -GL 2 -doMajorMinor 1 -underFlowProtect 1 \
+                   -anc $ANC -rf $REGION -remove_bads 1 -minMapQ 30 -minQ 20 -minInd $MIN_IND -setMinDepthInd $MIN_DEPTH \
+                   -b $DIR/$POP'_bams.txt' \
+                   -pest /g/data/ht96/Avneet_UQ/manuscript/thetas/'thetas_'$POP/sfs/$POP'_LG_1'.sfs \
+                   -out /g/data/ht96/Avneet_UQ/manuscript/thetas/'thetas_'$POP/do_thetas/$POP'_LG_1'
+
+done
