@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -l ncpus=5
+#PBS -l mem=100GB
+#PBS -l jobfs=100GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=10:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+module load python3/3.7.4
+
+
+for POP in G AG R H01 D01
+
+do
+
+    echo $POP
+    python3 /g/data/ht96/Avneet_UQ/manuscript/ld/ld_by_blocks.py /g/data/ht96/Avneet_UQ/manuscript/ld/'ld_'$POP/ngsld/$POP'_LG_1.ld' 1 $POP'_LG_1.ld_by_1'
+
+done
