@@ -1,0 +1,16 @@
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=100GB
+#PBS -l jobfs=100GB
+#PBS -q normal
+#PBS -P ht96
+#PBS -l walltime=24:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+ANGSD=/home/564/ak2993/angsd/
+REGIONS=/g/data/ht96/Avneet_UQ/manuscript/LG/LG_all_sorted.txt
+
+
+
+${ANGSD}/angsd -b /g/data/ht96/Avneet_UQ/manuscript/bam_paths/R_bams.txt -gl 2 -domajorminor 1 -snp_pval 1e-6 -domaf 1 -minmaf 0.05 -doGlf 3 -rf $REGIONS -out /g/data/ht96/Avneet_UQ/manuscript/gwas_cov/ngsrelate/r_all_lg
