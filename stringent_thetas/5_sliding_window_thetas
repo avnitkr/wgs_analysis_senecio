@@ -1,0 +1,18 @@
+#!/bin/bash
+#PBS -l ncpus=10
+#PBS -l mem=100GB
+#PBS -l jobfs=150GB
+#PBS -q hugemem
+#PBS -P ht96
+#PBS -l walltime=5:00:00
+#PBS -l storage=scratch/ht96+gdata/ht96
+
+
+for POP in G AG R H01 D01
+
+do
+
+    echo $POP
+    /home/564/ak2993/angsd/misc/thetaStat do_stat /g/data/ht96/Avneet_UQ/manuscript/thetas/'thetas_'$POP/do_thetas/$POP'_LG_1.thetas.idx' -win 10000 -step 1000 -outnames /g/data/ht96/Avneet_UQ/manuscript/thetas/'thetas_'$POP/sliding_window_thetas/$POP'_LG_1.thetas.windows'
+
+done
