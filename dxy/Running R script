@@ -1,0 +1,14 @@
+gunzip D01_LG_7.mafs.gz
+gunzip H01_LG_7.mafs.gz
+
+
+
+wc -l intersect_LG_7.txt #intersecting sites between two populations from fst folder
+
+module load R
+
+
+Rscript calc_dxy.R -p /g/data/ht96/Avneet_UQ/manuscript/dxy/mafs/H01_LG_7.mafs -q /g/data/ht96/Avneet_UQ/manuscript/dxy/mafs/D01_LG_7.mafs -t 1183354
+
+
+ mv Dxy_persite.txt Dxy_persite_lg_1.txt
