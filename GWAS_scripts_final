@@ -1,0 +1,190 @@
+scripts for gwas
+
+### LOW FILTERS
+
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=48:00:00
+#PBS -l select=1:ncpus=24:mem=120GB
+#PBS -N assoc
+
+cd $PBS_O_WORKDIR
+
+#setting quantitative phenotype file
+PHENO=/QRISdata/Q0969/genetic_architecture/feleven_pheno.txt
+
+#setting the job population bam paths list
+BAMS=/QRISdata/Q0969/genetic_architecture/combinedpaths.txt
+
+#setting the target regions (format is contig:start-end)
+REGIONS=/QRISdata/Q0969/genetic_architecture/linkage_groups/twenty_lg.txt
+
+#loading ANGSD
+ANGSD=/home/uqakaur3/thetas/angsd/
+
+$ANGSD/angsd -P 24 -rf ${REGIONS} -yQuant $PHENO \
+             -doAsso 4 -GL 2 -doPost 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+             -b $BAMS -out all_lg_quant_EM_gwas
+
+
+
+####allele frequency
+
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=20:00:00
+#PBS -l select=1:ncpus=24:mem=120GB
+#PBS -N allele_frequency
+
+cd $PBS_O_WORKDIR
+
+BAMS=/scratch/project/senecio_wgs/genetic_architecture/d01_bam_paths.txt
+
+REGIONS=/scratch/project/senecio_wgs/genetic_architecture/sorted_twenty_lg.txt
+
+SITES=/scratch/project/senecio_wgs/genetic_architecture/associated_sites_sorted.txt
+
+ANGSD=/home/uqakaur3/thetas/angsd/
+
+$ANGSD/angsd -bam $BAMS \
+             -GL 2 \
+             -doMaf 1 \
+             -doMajorMinor 3 \
+             -rf $REGIONS \
+             -sites $SITES \
+             -out d01 \
+             -nThreads 24
+
+
+
+
+
+
+
+
+### MEDIUM FILTERS
+
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=48:00:00
+#PBS -l select=1:ncpus=24:mem=120GB
+#PBS -N assoc
+
+cd $PBS_O_WORKDIR
+
+#setting quantitative phenotype file
+PHENO=/QRISdata/Q0969/genetic_architecture/feleven_pheno.txt
+
+#setting the job population bam paths list
+BAMS=/QRISdata/Q0969/genetic_architecture/combinedpaths.txt
+
+#setting the target regions (format is contig:start-end)
+REGIONS=/QRISdata/Q0969/genetic_architecture/linkage_groups/twenty_lg.txt
+
+#loading ANGSD
+ANGSD=/home/uqakaur3/thetas/angsd/
+
+$ANGSD/angsd -P 24 -rf $REGIONS -yQuant $PHENO \
+             -doAsso 4 -GL 2 -doPost 1 -doMajorMinor 1 -doMaf 1 -doCounts 1 \
+             -remove_bads 1 -minMapQ 30 -minQ 20 -b $BAMS -out all_lg_quant_EM_gwas_claire
+			 
+			 
+##### allele frequency
+
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=10:00:00
+#PBS -l select=1:ncpus=20:mem=60GB
+#PBS -N allele_frequency
+
+cd $PBS_O_WORKDIR
+
+BAMS=/scratch/project/senecio_wgs/genetic_architecture/d01_bam_paths.txt
+
+REGIONS=/scratch/project/senecio_wgs/genetic_architecture/sorted_twenty_lg.txt
+
+SITES=/scratch/project/senecio_wgs/genetic_architecture/assoc_claire/sorted_assoc_sites_claire.txt
+
+ANGSD=/home/uqakaur3/thetas/angsd/
+
+$ANGSD/angsd -bam $BAMS \
+             -GL 2 \
+             -doMaf 1 \
+             -doMajorMinor 3 \
+             -rf $REGIONS -remove_bads 1 -minMapQ 30 -minQ 20 \
+             -sites $SITES \
+             -out d01 \
+             -nThreads 20
+
+
+
+
+
+
+
+
+
+
+
+
+
+### STRINGENT FILTERS
+
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=10:00:00
+#PBS -l select=1:ncpus=20:mem=60GB
+#PBS -N assoc
+
+cd $PBS_O_WORKDIR
+
+#setting quantitative phenotype file
+PHENO=/QRISdata/Q0969/genetic_architecture/feleven_pheno.txt
+
+#setting the job population bam paths list
+BAMS=/QRISdata/Q0969/genetic_architecture/combinedpaths.txt
+
+#setting the target regions (format is contig:start-end)
+REGIONS=/QRISdata/Q0969/genetic_architecture/linkage_groups/twenty_lg.txt
+
+#loading ANGSD
+ANGSD=/home/uqakaur3/thetas/angsd/
+
+MIN_MAF=0.05
+PERCENT_IND=0.5
+MAX_DEPTH_FACTOR=4
+N_IND=$(wc -l $BAMS | cut -d " " -f 1)
+MIN_IND_FLOAT=$(echo "($N_IND * $PERCENT_IND)"| bc -l)
+MIN_IND=${MIN_IND_FLOAT%.*}
+MAX_DEPTH=$(echo "($N_IND * $MAX_DEPTH_FACTOR)" |bc -l)
+
+$ANGSD/angsd -P 20 -rf $REGIONS -yQuant $PHENO \
+             -doAsso 4 -GL 2 -doPost 1 -doMajorMinor 1 -doMaf 1 -doCounts 1 \
+             -remove_bads 1 -minMapQ 30 -minQ 20 -b $BAMS -minInd $MIN_IND -minMaf $MIN_MAF -setMaxDepth $MAX_DEPTH -out all_lg_quant_EM_gwas_depth_filters
+			 
+			 
+			 
+###allele frequency
+#!/bin/bash
+#PBS -A UQ-SCI-BiolSci
+#PBS -l walltime=05:00:00
+#PBS -l select=1:ncpus=12:mem=60GB
+#PBS -N allele_frequency
+
+cd $PBS_O_WORKDIR
+
+BAMS=/scratch/project/senecio_wgs/genetic_architecture/d01_bam_paths.txt
+
+REGIONS=/scratch/project/senecio_wgs/genetic_architecture/sorted_twenty_lg.txt
+
+SITES=/scratch/project/senecio_wgs/genetic_architecture/assoc_claire_minind_depth_filters/sorted_assoc_sites_depth.txt
+
+ANGSD=/home/uqakaur3/thetas/angsd/
+
+$ANGSD/angsd -bam $BAMS \
+             -GL 2 \
+             -doMaf 1 \
+             -doMajorMinor 3 \
+             -rf $REGIONS \
+             -sites $SITES \
+             -out d01 \
+             -nThreads 12
